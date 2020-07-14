@@ -1,0 +1,24 @@
+from extras.plugins import PluginConfig
+from .version import __version__
+
+
+class QRCodeConfig(PluginConfig):
+    name = 'netbox_qrcode'
+    verbose_name = 'qrcode'
+    description = 'Generate QR codes for the objects'
+    version = __version__
+    author = 'Nikolay Yuzefovich'
+    author_email = 'mgk.kolek@gmail.com'
+    required_settings = []
+    default_settings = {
+        'with_text': True,
+        'text_fields': ['name', 'serial'],
+        'font': 'TahomaBold',
+        'custom_text': None,
+        'qr_version': 1,
+        'qr_error_correction': 0,
+        'qr_box_size': 6,
+        'qr_border': 4
+    }
+
+config = QRCodeConfig # noqa E305

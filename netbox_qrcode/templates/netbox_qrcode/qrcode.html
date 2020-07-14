@@ -1,0 +1,20 @@
+<script type="text/javascript">
+    function printImg(source) {
+        var win = window.open('');
+        win.document.write('<img src="' + source + '" onload="window.print();window.close()" />');
+        win.focus();
+    }
+</script>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>QR Code</strong>
+    </div>
+    <div>
+        <img src="data:image/png;base64,{{image}}" />
+    </div>
+    <div class="panel-footer text-right noprint">
+        <button onclick="printImg('data:image/png;base64,{{image}}')" ; class="btn btn-xs btn-primary">
+            <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print
+        </button>
+    </div>
+</div>
