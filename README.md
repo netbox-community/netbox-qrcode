@@ -19,8 +19,7 @@ Enable the plugin in /opt/netbox/netbox/netbox/configuration.py:
 ```
 PLUGINS = ['netbox_qrcode']
 ```
-Restart NetBox
-Add `netbox-qrcode` to your local_requirements.txt
+Restart NetBox and add `netbox-qrcode` to your local_requirements.txt
 
 ## Configuration
 
@@ -48,14 +47,16 @@ is.
 Configuration example:
 ```
 PLUGINS_CONFIG = {
-    'with_text': True,
-    'text_fields': ['name', 'serial', 'device_type'],
-    'font': 'ArialMT',
-    'custom_text': 'Property of SomeCompany\ntel.8.800333554-CALL',
-    'qr_version': 1,
-    'qr_error_correction': 0,
-    'qr_box_size': 4,
-    'qr_border': 4   
+    'netbox_qrcode': {
+        'with_text': True,
+        'text_fields': ['name', 'serial', 'device_type'],
+        'font': 'ArialMT',
+        'custom_text': 'Property of SomeCompany\ntel.8.800333554-CALL',
+        'qr_version': 1,
+        'qr_error_correction': 0,
+        'qr_box_size': 4,
+        'qr_border': 4
+    }
 }
 ```
 
