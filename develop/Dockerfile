@@ -25,7 +25,7 @@ RUN mkdir -p /source
 WORKDIR /source
 COPY . /source
 
-RUN pip install -r requirements.txt
+#RUN pip install -r requirements.txt
 RUN python setup.py develop
 
 WORKDIR /opt/netbox/netbox/

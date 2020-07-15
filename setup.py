@@ -3,6 +3,8 @@ import os.path
 
 from setuptools import find_packages, setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 def read(rel_path):
     here = os.path.abspath(os.path.dirname(__file__))
@@ -22,15 +24,26 @@ def get_version(rel_path):
 setup(
     name='netbox-qrcode',
     version=get_version('netbox_qrcode/version.py'),
-    description='QR Code generation from objects view',
-    url='https://git.skbkontur.ru/dcnoc/netbox-qrcode',
+    description='QR Code generation for netbox objects',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/k01ek/netbox-qrcode',
     author='Nikolay Yuzefovich',
     author_email='mgk.kolek@gmail.com',
-    install_requires=[],
     packages=find_packages(),
     include_package_data=True,
     package_data={
         '': ['*.ttf'],
         '': ['*.html'],
-    }
+    },
+    install_requires=[
+        'qrcode==6.1',
+        'Pillow==7.2.0'
+    ],
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'License :: OSI Approved :: Apache Software License',
+        'Framework :: Django',
+        'Programming Language :: Python :: 3',
+    ]
 )
