@@ -64,3 +64,8 @@ PLUGINS_CONFIG = {
 Developing tools for this project based on [ntc-netbox-plugin-onboarding](https://github.com/networktocode/ntc-netbox-plugin-onboarding) repo.
 
 Issues and pull requests are welcomed.
+
+## Screenshots
+
+QR code with text label
+![QR Code](docs/img/qrcode.png)

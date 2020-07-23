@@ -8,7 +8,7 @@ BUILD_NAME=netbox_qrcode
 VERFILE=./netbox_qrcode/version.py
 
 
-build:
+cbuild:
 	docker-compose -f ${COMPOSE_FILE} \
 		-p ${BUILD_NAME} build \
 		--build-arg netbox_ver=${NETBOX_VER} \
