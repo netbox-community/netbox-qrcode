@@ -12,13 +12,27 @@ class QRCodeConfig(PluginConfig):
     required_settings = []
     default_settings = {
         'with_text': True,
-        'text_fields': ['name', 'serial'],
+        'text_fields': ['name'],
         'font': 'TahomaBold',
         'custom_text': None,
         'qr_version': 1,
         'qr_error_correction': 0,
         'qr_box_size': 6,
-        'qr_border': 4
+        'qr_border': 4,
+        'device': {
+            'text_fields': ['name', 'serial']
+        },
+        'rack': {
+            'text_fields': ['name']
+        },
+        'cable': {
+            'text_fields': [
+                '_termination_a_device',
+                'termination_a',
+                '_termination_b_device',
+                'termination_b',
+                ]
+        }
     }
 
 config = QRCodeConfig # noqa E305

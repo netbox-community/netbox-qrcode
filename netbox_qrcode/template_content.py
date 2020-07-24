@@ -6,23 +6,28 @@ from .utilities import get_img_b64, get_qr, get_qr_text, get_concat
 
 
 class QRCode(PluginTemplateExtension):
-    model = 'dcim.device'
 
     def right_page(self):
         config = self.context['config']
-        device = self.context['object']
+        obj = self.context['object']
         request = self.context['request']
-        url = request.build_absolute_uri(device.get_absolute_url())
+        url = request.build_absolute_uri(obj.get_absolute_url())
+        # get object settings
+        obj_cfg = config.get(self.model.replace('dcim.', ''))
+        # and ovverride default
+        config.update(obj_cfg)
+
         qr_args = {}
         for k, v in config.items():
             if k.startswith('qr_'):
                 qr_args[k.replace('qr_', '')] = v
+
         qr_img = get_qr(url, **qr_args)
         if config.get('with_text'):
             text = []
             for text_field in config.get('text_fields', []):
-                if getattr(device, text_field, None):
-                    text.append('{}'.format(getattr(device, text_field)))
+                if getattr(obj, text_field, None):
+                    text.append('{}'.format(getattr(obj, text_field)))
             custom_text = config.get('custom_text')
             if custom_text:
                 text.append(custom_text)
@@ -40,4 +45,16 @@ class QRCode(PluginTemplateExtension):
             return ""
 
 
-template_extensions = [QRCode]
+class DeviceQRCode(QRCode):
+    model = 'dcim.device'
+
+
+class RackQRCode(QRCode):
+    model = 'dcim.rack'
+
+
+class CableQRCode(QRCode):
+    model = 'dcim.cable'
+
+
+template_extensions = [DeviceQRCode, RackQRCode, CableQRCode]
