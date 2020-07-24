@@ -7,7 +7,7 @@ from .utilities import get_img_b64, get_qr, get_qr_text, get_concat
 
 class QRCode(PluginTemplateExtension):
 
-new    def x_page(self):
+    def x_page(self):
         config = self.context['config']
         obj = self.context['object']
         request = self.context['request']
