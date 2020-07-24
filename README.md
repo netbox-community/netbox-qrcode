@@ -1,6 +1,6 @@
 # Netbox QR Code Plugin
 
-[Netbox](https://github.com/netbox-community/netbox) plugin for generate QR codes for objects (now only Device object supported).
+[Netbox](https://github.com/netbox-community/netbox) plugin for generate QR codes for objects: Rack, Device, Cable.
 
 This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) and [Pillow](https://github.com/python-pillow/Pillow) python library
 
@@ -26,7 +26,7 @@ Restart NetBox and add `netbox-qrcode` to your local_requirements.txt
 The following options are available:
 
 * `with_text`: Boolean (default True). Text label will be added to QR code image if enabled.
-* `text_fields`: List of String (default ['name', 'serial']). Text fields of object that will be added as text label to QR image.
+* `text_fields`: List of String (default ['name']). Text fields of object that will be added as text label to QR image.
 * `font`: String (default TahomaBold) Font name for text label ( Some font include in package, see fonts dir).
 * `custom_text`: String or None (default None) additional text label to QR code image (will be added after text_fields).
 * `qr_version`: Integer (default 1) parameter is an integer from 1 to 40 that controls the size of
@@ -44,18 +44,35 @@ is.
 * `qr_border`: Integer (default 4),  controls how many boxes thick the border should be
 (the default is 4, which is the minimum according to the specs).
 
+### Per object options
+
+Per object options override default options. Per object options dictionary can contains any of default options inside.
+
+* `device`: Dict or None (default {'text_fields': ['name', 'serial']}), set None to disble QR code
+* `rack`: Dict or None (default {'text_fields': ['name']}) , set None to disble QR code
+* `cable`: Dict or None ( defaul {'text_fields': ['_termination_a_device', 'termination_a', '_termination_b_device', 'termination_b',]}), set None to disble QR code
+
 Configuration example:
 ```
 PLUGINS_CONFIG = {
     'netbox_qrcode': {
         'with_text': True,
-        'text_fields': ['name', 'serial', 'device_type'],
+        'text_fields': ['name', 'serial'],
         'font': 'ArialMT',
         'custom_text': 'Property of SomeCompany\ntel.8.800333554-CALL',
         'qr_version': 1,
         'qr_error_correction': 0,
         'qr_box_size': 4,
-        'qr_border': 4
+        'qr_border': 4,
+        # per object options
+        'cable': None,  # disable QR code for Cable object
+        'rack': {
+            'text_fields': ['site', 'name', 'facility_id', 'tenant']
+        },
+        'device': {
+            'qr_box_size': 6,
+            'custom_text': None,
+        }
     }
 }
 ```
@@ -67,5 +84,11 @@ Issues and pull requests are welcomed.
 
 ## Screenshots
 
-QR code with text label
-![QR Code](docs/img/qrcode.png)
+Device QR code with text label
+![Device QR Code](docs/img/qrcode.png)
+
+Rack QR code
+![Rack QR Code](docs/img/qrcode_rack.png)
+
+Cable QR code
+![Cable QR Code](docs/img/qrcode_cable.png)

@@ -7,13 +7,15 @@ from .utilities import get_img_b64, get_qr, get_qr_text, get_concat
 
 class QRCode(PluginTemplateExtension):
 
-    def right_page(self):
+new    def x_page(self):
         config = self.context['config']
         obj = self.context['object']
         request = self.context['request']
         url = request.build_absolute_uri(obj.get_absolute_url())
         # get object settings
         obj_cfg = config.get(self.model.replace('dcim.', ''))
+        if obj_cfg is None:
+            return ''
         # and ovverride default
         config.update(obj_cfg)
 
@@ -42,19 +44,28 @@ class QRCode(PluginTemplateExtension):
                 'netbox_qrcode/qrcode.html', extra_context={'image': img}
             )
         except ObjectDoesNotExist:
-            return ""
+            return ''
 
 
 class DeviceQRCode(QRCode):
     model = 'dcim.device'
 
+    def right_page(self):
+        return self.x_page()
+
 
 class RackQRCode(QRCode):
     model = 'dcim.rack'
 
+    def right_page(self):
+        return self.x_page()
+
 
 class CableQRCode(QRCode):
     model = 'dcim.cable'
+
+    def left_page(self):
+        return self.x_page()
 
 
 template_extensions = [DeviceQRCode, RackQRCode, CableQRCode]
