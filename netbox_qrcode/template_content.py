@@ -34,7 +34,7 @@ class QRCode(PluginTemplateExtension):
             if custom_text:
                 text.append(custom_text)
             text = '\n'.join(text)
-            text = text.encode("utf-8")
+            text = text.encode('utf-8')
             text_img = get_qr_text(qr_img.size, text, config.get('font'))
             qr_with_text = get_concat(qr_img, text_img)
             img = get_img_b64(qr_with_text)
