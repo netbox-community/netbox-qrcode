@@ -57,5 +57,5 @@ def get_concat(im1, im2, text_position='right'):
     else:
         dst = Image.new('L', (im1.width + im2.width, im1.height))
         dst.paste(im1, (0, 0))
-        dst.paste(im2, (im1.width, 0))        
+        dst.paste(im2, (im1.width, 0))      
     return dst
