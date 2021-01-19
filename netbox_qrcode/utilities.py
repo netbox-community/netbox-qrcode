@@ -49,8 +49,13 @@ def get_qr_text(size, text, font='TahomaBold'):
     return img
 
 
-def get_concat(im1, im2):
-    dst = Image.new('L', (im1.width + im2.width, im1.height))
-    dst.paste(im1, (0, 0))
-    dst.paste(im2, (im1.width, 0))
+def get_concat(im1, im2, text_position='right'):
+    if text_position == 'bottom':
+        dst = Image.new('L', (im1.width, im1.height + im2.height))
+        dst.paste(im1, (0, 0))
+        dst.paste(im2, (0, im1.height))
+    else:
+        dst = Image.new('L', (im1.width + im2.width, im1.height))
+        dst.paste(im1, (0, 0))
+        dst.paste(im2, (im1.width, 0))        
     return dst
