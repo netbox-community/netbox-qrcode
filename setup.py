@@ -37,8 +37,8 @@ setup(
         '': ['*.html'],
     },
     install_requires=[
-        'qrcode==6.1',
-        'Pillow==7.2.0'
+        'qrcode',
+        'Pillow'
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
