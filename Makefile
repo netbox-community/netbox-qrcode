@@ -1,6 +1,7 @@
 PYTHON_VER?=3.7
 NETBOX_VER?=v2.10.6
 
+
 NAME=netbox-qrcode
 
 COMPOSE_FILE=./develop/docker-compose.yml

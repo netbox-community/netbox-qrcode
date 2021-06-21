@@ -30,6 +30,7 @@ The following options are available:
 * `font`: String (default TahomaBold) Font name for text label ( Some font include in package, see fonts dir).
 * `text_location`: Where to render the text, relative to the QR code.  Valid values are `"right"` (default), `"left"`", `"up"`, and `"down"`.
 * `custom_text`: String or None (default None) additional text label to QR code image (will be added after text_fields).
+* `text_position`: String right or bottom (default right). Text label will be added right to the QR code image or below.
 * `qr_version`: Integer (default 1) parameter is an integer from 1 to 40 that controls the size of
 the QR Code (the smallest, version 1, is a 21x21 matrix).
 * `qr_error_correction`: Integer (default 0),  controls the error correction used for the
