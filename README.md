@@ -61,6 +61,7 @@ PLUGINS_CONFIG = {
         'text_fields': ['name', 'serial'],
         'font': 'ArialMT',
         'custom_text': 'Property of SomeCompany\ntel.8.800333554-CALL',
+        'text_location': 'up',
         'qr_version': 1,
         'qr_error_correction': 0,
         'qr_box_size': 4,
