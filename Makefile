@@ -1,5 +1,6 @@
 PYTHON_VER?=3.7
-NETBOX_VER?=v2.9.4
+NETBOX_VER?=v2.10.6
+
 
 NAME=netbox-qrcode
 
@@ -27,7 +28,7 @@ stop:
 
 destroy:
 	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} down
-	docker volume rm -f ${BUILD_NAME}_pgdata_netbox_tickets
+	docker volume rm -f ${BUILD_NAME}_pgdata_netbox_qrcode
 
 nbshell:
 	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} run netbox python manage.py nbshell

@@ -28,34 +28,72 @@ def get_img_b64(img):
     return str(base64.b64encode(stream.getvalue()), encoding='ascii')
 
 
-def get_qr_text(size, text, font='TahomaBold'):
-    img = Image.new('L', size, 'white')
+def get_qr_text(max_size, text, font='TahomaBold'):
     font_size = 56
-    flag = True
-    while flag:
+    tmpimg = Image.new('L', max_size, 'white')
+    text_too_large = True
+    while text_too_large:
         file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
         try:
             fnt = ImageFont.truetype(file_path, font_size)
         except Exception:
             fnt = ImageFont.load_default()
-            flag = False
-        draw = ImageDraw.Draw(img)
+
+        draw = ImageDraw.Draw(tmpimg)
         w, h = draw.textsize(text, font=fnt)
-        if w < size[0] - 4 and h < size[1] - 4:
-            flag = False
+        if w < max_size[0] - 4 and h < max_size[1] - 4:
+            text_too_large = False
         font_size -= 1
-    W, H = size
-    draw.text(((W-w)/2, (H-h)/2), text, font=fnt, fill='black')
+
+    img = Image.new('L', (w, h), 'white')
+    draw = ImageDraw.Draw(img)
+    draw.text((0, 0), text, font=fnt, fill='black')
     return img
 
-
-def get_concat(im1, im2, text_position='right'):
-    if text_position == 'bottom':
-        dst = Image.new('L', (im1.width, im1.height + im2.height))
-        dst.paste(im1, (0, 0))
-        dst.paste(im2, (0, im1.height))
+def get_concat(im1, im2, direction='right'):
+    if direction == "right" or direction == "left":
+        width = im1.width + im2.width
+        height = max(im1.height, im2.height)
+    elif direction == "down" or direction == "up":
+        width = max(im1.width, im2.width)
+        height = im1.height + im2.height
     else:
-        dst = Image.new('L', (im1.width + im2.width, im1.height))
-        dst.paste(im1, (0, 0))
-        dst.paste(im2, (im1.width, 0))      
+        raise ValueError("Invalid direction '%s' (must be one of 'left', 'right', 'up', or 'down')" % direction)
+
+    dst = Image.new('L', (width, height), 'white')
+
+    if direction == "right" or direction == "left":
+        if im1.height > im2.height:
+            im1_y = 0
+            im2_y = abs(im1.height-im2.height) // 2
+        else:
+            im1_y = abs(im1.height-im2.height) // 2
+            im2_y = 0
+
+        if direction == "right":
+            im1_x = 0
+            im2_x = im1.width
+        else:
+            im1_x = im2.width
+            im2_x = 0
+    elif direction == "up" or direction == "down":
+        if im1.width > im2.width:
+            im1_x = 0
+            im2_x = abs(im1.width-im2.width) // 2
+        else:
+            im1_x = abs(im1.width-im2.width) // 2
+            im2_x = 0
+
+        if direction == "down":
+            im1_y = 0
+            im2_y = im1.height
+        else:
+            im1_y = im2.height
+            im2_y = 0
+    else:
+        raise ValueError("Invalid direction '%s' (must be one of 'left', 'right', 'up', or 'down')" % direction)
+
+    dst.paste(im1, (im1_x, im1_y))
+    dst.paste(im2, (im2_x, im2_y))
+
     return dst

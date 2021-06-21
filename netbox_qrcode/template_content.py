@@ -28,14 +28,28 @@ class QRCode(PluginTemplateExtension):
         if config.get('with_text'):
             text = []
             for text_field in config.get('text_fields', []):
+                cfn = None
+                if '.' in text_field:
+                    try:
+                        text_field, cfn = text_field.split('.')
+                    except ValueError:
+                        cfn = None
                 if getattr(obj, text_field, None):
-                    text.append('{}'.format(getattr(obj, text_field)))
+                    if cfn:
+                        try:
+                            if getattr(obj, text_field).get(cfn):
+                                text.append('{}'.format(getattr(obj, text_field).get(cfn)))
+                        except AttributeError:
+                            pass
+                    else:
+                        text.append('{}'.format(getattr(obj, text_field)))
             custom_text = config.get('custom_text')
             if custom_text:
                 text.append(custom_text)
             text = '\n'.join(text)
             text_img = get_qr_text(qr_img.size, text, config.get('font'))
-            qr_with_text = get_concat(qr_img, text_img, config.get('text_position'))
+            qr_with_text = get_concat(qr_img, text_img, config.get('text_location', 'right'))
+
             img = get_img_b64(qr_with_text)
         else:
             img = get_img_b64(qr_img)

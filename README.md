@@ -26,15 +26,16 @@ Restart NetBox and add `netbox-qrcode` to your local_requirements.txt
 The following options are available:
 
 * `with_text`: Boolean (default True). Text label will be added to QR code image if enabled.
-* `text_fields`: List of String (default ['name']). Text fields of object that will be added as text label to QR image.
+* `text_fields`: List of String (default ['name']). Text fields of an object that will be added as text label to QR image. It's possible to use custom field values.
 * `font`: String (default TahomaBold) Font name for text label ( Some font include in package, see fonts dir).
+* `text_location`: Where to render the text, relative to the QR code.  Valid values are `"right"` (default), `"left"`", `"up"`, and `"down"`.
 * `custom_text`: String or None (default None) additional text label to QR code image (will be added after text_fields).
 * `text_position`: String right or bottom (default right). Text label will be added right to the QR code image or below.
 * `qr_version`: Integer (default 1) parameter is an integer from 1 to 40 that controls the size of
 the QR Code (the smallest, version 1, is a 21x21 matrix).
 * `qr_error_correction`: Integer (default 0),  controls the error correction used for the
 QR Code. The following values are available:
-   
+
    1 - About 7% or less errors can be corrected.
    0 - About 15% or less errors can be corrected.
    2 - About 30% or less errors can be corrected.
@@ -68,7 +69,13 @@ PLUGINS_CONFIG = {
         # per object options
         'cable': None,  # disable QR code for Cable object
         'rack': {
-            'text_fields': ['site', 'name', 'facility_id', 'tenant']
+            'text_fields': [
+                'site',
+                'name',
+                'facility_id',
+                'tenant',
+                'cf.cf_name'
+            ]
         },
         'device': {
             'qr_box_size': 6,
