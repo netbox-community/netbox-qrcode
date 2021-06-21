@@ -15,7 +15,7 @@ class QRCodeConfig(PluginConfig):
         'text_fields': ['name', 'serial'],
         'font': 'TahomaBold',
         'custom_text': None,
-        'text_position': 'right',
+        'text_location': 'right',
         'qr_version': 1,
         'qr_error_correction': 0,
         'qr_box_size': 6,

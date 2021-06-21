@@ -50,19 +50,22 @@ def get_qr_text(max_size, text, font='TahomaBold'):
     draw.text((0, 0), text, font=fnt, fill='black')
     return img
 
+
 def get_concat(im1, im2, direction='right'):
-    if direction == "right" or direction == "left":
+    if direction == 'right' or direction == 'left':
         width = im1.width + im2.width
         height = max(im1.height, im2.height)
-    elif direction == "down" or direction == "up":
+    elif direction == 'down' or direction == 'up':
         width = max(im1.width, im2.width)
         height = im1.height + im2.height
     else:
-        raise ValueError("Invalid direction '%s' (must be one of 'left', 'right', 'up', or 'down')" % direction)
+        raise ValueError(
+            'Invalid direction "{}" (must be one of "left", "right", "up", or "down")'.format(direction)
+        )
 
     dst = Image.new('L', (width, height), 'white')
 
-    if direction == "right" or direction == "left":
+    if direction == 'right' or direction == 'left':
         if im1.height > im2.height:
             im1_y = 0
             im2_y = abs(im1.height-im2.height) // 2
@@ -70,13 +73,13 @@ def get_concat(im1, im2, direction='right'):
             im1_y = abs(im1.height-im2.height) // 2
             im2_y = 0
 
-        if direction == "right":
+        if direction == 'right':
             im1_x = 0
             im2_x = im1.width
         else:
             im1_x = im2.width
             im2_x = 0
-    elif direction == "up" or direction == "down":
+    elif direction == 'up' or direction == 'down':
         if im1.width > im2.width:
             im1_x = 0
             im2_x = abs(im1.width-im2.width) // 2
@@ -84,14 +87,16 @@ def get_concat(im1, im2, direction='right'):
             im1_x = abs(im1.width-im2.width) // 2
             im2_x = 0
 
-        if direction == "down":
+        if direction == 'down':
             im1_y = 0
             im2_y = im1.height
         else:
             im1_y = im2.height
             im2_y = 0
     else:
-        raise ValueError("Invalid direction '%s' (must be one of 'left', 'right', 'up', or 'down')" % direction)
+        raise ValueError(
+            'Invalid direction "{}" (must be one of "left", "right", "up", or "down")'.format(direction)
+        )
 
     dst.paste(im1, (im1_x, im1_y))
     dst.paste(im2, (im2_x, im2_y))

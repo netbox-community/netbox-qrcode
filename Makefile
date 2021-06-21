@@ -1,5 +1,5 @@
 PYTHON_VER?=3.7
-NETBOX_VER?=v2.10.6
+NETBOX_VER?=v2.11.6
 
 
 NAME=netbox-qrcode
@@ -65,3 +65,11 @@ endif
 	git commit -am 'bump ver'
 	git push origin release-$(NEWVER)
 	git checkout develop
+
+pbuild:
+	python3 -m pip install --upgrade build
+	python3 -m build
+
+pypipub:
+	python3 -m pip install --upgrade twine
+	python3 -m twine upload dist/*
