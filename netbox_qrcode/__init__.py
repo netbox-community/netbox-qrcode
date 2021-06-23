@@ -1,10 +1,9 @@
 from extras.plugins import PluginConfig
 from .version import __version__
 
-
 class QRCodeConfig(PluginConfig):
     name = 'netbox_qrcode'
-    verbose_name = 'qrcode'
+    verbose_name = 'QR Code View'
     description = 'Generate QR codes for the objects'
     version = __version__
     author = 'Nikolay Yuzefovich'

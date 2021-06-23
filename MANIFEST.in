@@ -1,2 +1,3 @@
 recursive-include netbox_qrcode/templates *.html
 recursive-include netbox_qrcode/fonts *.ttf
+recursive-include netbox_qrcode/migrations *.py

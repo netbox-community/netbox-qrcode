@@ -1,0 +1,86 @@
+<!--Extend Netbox provided base webpage template and load resources-->
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 style="text-align: center">Netbox QR Code Menu</h2>
+
+<!--Prevent page reload form resubmission-->
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
+{% block qr_menu_content %}{% endblock %}
+
+<!--Reloading QR codes handled by post request-->
+<form method="POST" class="col-md-3">
+  {% csrf_token %}
+  <!--Font Size Settings-->
+  <div style="width: 400px; margin-top: 10px">
+    <label class="label label-primary" for="font-size-range" id="font-display">Font Size</label>
+    <span><input type="range" class="form-range" style="margin-top: 10px;" id="font-size-range" name="font-size-range"
+        min="1" max="200" value=100 /></span>
+  </div>
+
+  <!--QR Size Settings-->
+  <div style="width: 400px; margin-top: 10px">
+    <label class="label label-primary" for="box-size-range" id="box-display">Box Size</label>
+    <input type="range" class="form-range" style="margin-top: 10px;" id="box-size-range" name="box-size-range" min="1"
+      max="10" value=3 />
+  </div>
+
+  <!--Border Size Settings-->
+  <div style="width: 400px; margin-top: 10px">
+    <label class="label label-primary" for="border-size-range" id="border-display">Border Size</label>
+    <input type="range" class="form-range" style="margin-top: 10px" id="border-size-range" name="border-size-range"
+      min="" max="10" value=0 />
+  </div>
+
+  <!--Reload Submit Button-->
+  <div style="margin-top: 10px">
+    <input class="btn btn-success btn-md" type="submit" name="reload" value="Reload QR Codes" />
+    <!--Force Reload Checkbox-->
+    <input class="form-check-input" type="checkbox" id="force-reload-all" name="force-reload-all" value=1 />
+    <label class="form-check-label" for="force-reload-all">Force reload all</label>
+  </div>
+
+  <!--Display Success Message following successful Reload-->
+  {{ successMessage |safe }}
+
+</form>
+
+<!--Filter Functionality-->
+<div class="col-md-3 pull-right" style="padding-top: 50px">
+  {% load form_helpers %}
+  {% include 'inc/search_panel.html' %}
+  <div style="padding-bottom: 100px"></div>
+</div>
+</div>
+</div>
+
+<!--Handle Slider Input Values-->
+<script>
+  let fontValue = document.getElementById("font-size-range")
+  let boxValue = document.getElementById("box-size-range")
+  let borderValue = document.getElementById("border-size-range")
+
+  let fontDisplay = document.getElementById("font-display")
+  let boxDisplay = document.getElementById("box-display")
+  let borderDisplay = document.getElementById("border-display")
+
+  fontDisplay.innerHTML = "Font Size: " + fontValue.value
+  boxDisplay.innerHTML = "Box Size: " + boxValue.value
+  borderDisplay.innerHTML = "Border Size: " + borderValue.value
+
+  fontValue.oninput = function () {
+    fontDisplay.innerHTML = "Font Size: " + this.value;
+  }
+  boxValue.oninput = function () {
+    boxDisplay.innerHTML = "Box Size: " + this.value;
+  }
+  borderValue.oninput = function () {
+    borderDisplay.innerHTML = "Border Size: " + this.value;
+  }
+</script>
+
+{% endblock %}
