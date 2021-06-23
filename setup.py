@@ -33,12 +33,12 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        '': ['*.ttf'],
-        '': ['*.html'],
+        '': ['*.ttf','*.html']
     },
     install_requires=[
         'qrcode',
-        'Pillow'
+        'Pillow',
+        'requests',
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
