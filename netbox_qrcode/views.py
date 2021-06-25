@@ -32,7 +32,7 @@ class QRcodeDeviceView(View):
         for device in Device.objects.all().iterator():
 
             # Create device with resized url
-            url_resized = '{}resized{}.png'.format(base_url, device.name)
+            url_resized = '{}resized{}.png'.format(base_url, device._meta.object_name + str(device.pk))
             QRExtendedDevice.objects.get_or_create(
                 id=device.id,
                 device=device,
@@ -42,7 +42,7 @@ class QRcodeDeviceView(View):
                 device_role=device.device_role,
                 site=device.site,
                 rack=device.rack,
-                photo='image-attachments/{}.png'.format(device.name),
+                photo='image-attachments/{}.png'.format(device._meta.object_name + str(device.pk)),
                 url=url_resized
             )
 
@@ -119,7 +119,7 @@ class QRcodeRackView(View):
         for rack in Rack.objects.all().iterator():
 
             # Create rack with resized url
-            url_resized = '{}resized{}.png'.format(base_url, rack.name)
+            url_resized = '{}resized{}.png'.format(base_url, rack._meta.object_name + str(rack.pk))
             QRExtendedRack.objects.get_or_create(
                 id=rack.id,
                 rack=rack,
@@ -127,7 +127,7 @@ class QRcodeRackView(View):
                 status=rack.status,
                 site=rack.site,
                 role=rack.role,
-                photo='image-attachments/{}.png'.format(rack.name),
+                photo='image-attachments/{}.png'.format(rack._meta.object_name + str(rack.pk)),
                 url=url_resized
             )
 
@@ -198,12 +198,12 @@ class QRcodeCableView(View):
         for cable in Cable.objects.all().iterator():
 
             # Create cable with resized url
-            url_resized = '{}resized{}.png'.format(base_url, cable.name)
+            url_resized = '{}resized{}.png'.format(base_url, cable._meta.object_name + str(cable.pk))
             QRExtendedCable.objects.get_or_create(
                 id=cable.id,
                 cable=cable,
-                name=cable.name,
-                photo='image-attachments/{}.png'.format(cable.name),
+                name=cable._meta.object_name + str(cable.pk),
+                photo='image-attachments/{}.png'.format(cable._meta.object_name + str(cable.pk)),
                 url=url_resized
             )
 
@@ -294,7 +294,6 @@ class PrintView(View):
         # Set images with or without text should be used and build url
         without_text = request.POST.get('without_text')
 
-
         def combine_rows(imageRow, numRows):
             """
             Concatenates rows into pages
@@ -355,12 +354,13 @@ class PrintView(View):
             for i in range(image_count):
 
                 obj = Model.objects.get(pk=pk_list[i])
-                url = '{}{}.png'.format(base_url, obj.name)
+                url = '{}{}.png'.format(base_url, obj._meta.object_name + str(obj.pk))
                 image = Image.open(requests.get(url, stream=True).raw)
 
                 # Append info to bottom of image using user config font if no text QR
+                obj_name = obj.name if hasattr(obj, 'name') else obj._meta.object_name + str(obj.pk)
                 if without_text:
-                    text_img = get_qr_text((image.width, footer_text_height), obj.name, settings.PLUGINS_CONFIG.get(
+                    text_img = get_qr_text((image.width, footer_text_height), obj_name, settings.PLUGINS_CONFIG.get(
                         'netbox_qrcode', {}).get('font'), 200)
                     text_img = add_print_padding_v(text_img, text_padding)
                     image = get_concat_v(image, text_img)
@@ -426,7 +426,7 @@ def reloadQRImages(request, Model, objName, font_size=100, box_size=3, border_si
 
         # Check if qrcode already exists
         image_url = request.build_absolute_uri(
-            '/') + 'media/image-attachments/{}.png'.format(obj.name)
+            '/') + 'media/image-attachments/{}.png'.format(obj._meta.object_name + str(obj.pk))
         rq = requests.get(image_url)
 
         # Create QR Code only for non-existing or if forced
@@ -493,12 +493,12 @@ def reloadQRImages(request, Model, objName, font_size=100, box_size=3, border_si
                 # Save image with text to container with object's first field name
                 text_fields = config.get('text_fields', [])
                 file_path = '/opt/netbox/netbox/media/image-attachments/{}.png'.format(
-                    getattr(obj, text_fields[0], 'default'))
+                    obj._meta.object_name + str(obj.pk))
                 qr_with_text.save(file_path)
 
                 # Save image without text to container
                 file_path = '/opt/netbox/netbox/media/image-attachments/noText{}.png'.format(
-                    getattr(obj, text_fields[0], 'default'))
+                    obj._meta.object_name + str(obj.pk))
                 resize_width_height = (90, 90)
                 qr_img = qr_img.resize(resize_width_height)
                 qr_img.save(file_path)
@@ -507,7 +507,7 @@ def reloadQRImages(request, Model, objName, font_size=100, box_size=3, border_si
                 resize_width_height = (120, 50)
                 qr_with_text = qr_with_text.resize(resize_width_height)
                 file_path = '/opt/netbox/netbox/media/image-attachments/resized{}.png'.format(
-                    getattr(obj, text_fields[0], 'default'))
+                    obj._meta.object_name + str(obj.pk))
                 qr_with_text.save(file_path)
 
     return numReloaded

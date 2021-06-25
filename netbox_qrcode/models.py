@@ -15,8 +15,11 @@ class QRObject(models.Model):
     class Meta:
         abstract = True
 
-# Devices Wrapper
+
 class QRExtendedDevice(QRObject):
+    """
+    Devices Wrapper
+    """
     device = models.ForeignKey(
         to="dcim.Device", on_delete=models.CASCADE, null=True)
 
@@ -58,15 +61,21 @@ class QRExtendedDevice(QRObject):
         blank=True,
         null=True
     )
-    # Set link for id column in QRDeviceTable to be the return url formatted with device's pk
+
     def get_absolute_url(self):
+        """
+        # Set link for id column in QRDeviceTable to be the return url formatted with device's pk
+        """
         return reverse('dcim:device', args=[self.device.pk])
 
     def get_status_class(self):
         return DeviceStatusChoices.CSS_CLASSES.get(self.status)
 
-# Racks Wrapper
+
 class QRExtendedRack(QRObject):
+    """
+    Racks Wrapper
+    """
     rack = models.ForeignKey(
         to="dcim.Rack", on_delete=models.CASCADE, null=True)
 
@@ -102,10 +111,19 @@ class QRExtendedRack(QRObject):
     def get_status_class(self):
         return RackStatusChoices.CSS_CLASSES.get(self.status)
 
-# Cables Wrapper
+
 class QRExtendedCable(QRObject):
+    """
+    Cables Wrapper
+    """
     cable = models.ForeignKey(
-        to="dcim.Cable", on_delete=models.CASCADE, null=True)
+        to="dcim.Cable", on_delete=models.CASCADE, null=True
+    )
+    name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
 
     def get_absolute_url(self):
         return reverse('dcim:cable', args=[self.cable.pk])
