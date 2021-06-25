@@ -1,9 +1,7 @@
-
 from django.core.exceptions import ObjectDoesNotExist
 from extras.plugins import PluginTemplateExtension
 
 from .utilities import get_img_b64, get_qr, get_qr_text, get_concat
-
 
 class QRCode(PluginTemplateExtension):
 
@@ -12,11 +10,11 @@ class QRCode(PluginTemplateExtension):
         obj = self.context['object']
         request = self.context['request']
         url = request.build_absolute_uri(obj.get_absolute_url())
-        # get object settings
+        # Get object config settings
         obj_cfg = config.get(self.model.replace('dcim.', ''))
         if obj_cfg is None:
             return ''
-        # and ovverride default
+        # and override default config
         config.update(obj_cfg)
 
         qr_args = {}
@@ -24,7 +22,10 @@ class QRCode(PluginTemplateExtension):
             if k.startswith('qr_'):
                 qr_args[k.replace('qr_', '')] = v
 
+        # Create qr image
         qr_img = get_qr(url, **qr_args)
+
+        # Handle qr text if enabled
         if config.get('with_text'):
             text = []
             for text_field in config.get('text_fields', []):
@@ -47,10 +48,16 @@ class QRCode(PluginTemplateExtension):
             if custom_text:
                 text.append(custom_text)
             text = '\n'.join(text)
+
+            # Create qr text with image size and text
             text_img = get_qr_text(qr_img.size, text, config.get('font'))
+
+            # Combine qr image and qr text 
             qr_with_text = get_concat(qr_img, text_img, config.get('text_location', 'right'))
 
+            # Convert png to base 64 image
             img = get_img_b64(qr_with_text)
+            
         else:
             img = get_img_b64(qr_img)
         try:

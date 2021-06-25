@@ -1,0 +1,84 @@
+{% extends 'base.html' %} 
+{% load render_table from django_tables2 %} 
+{% block content %}
+
+<!--Multi Page Print Image Script-->
+<script type="text/javascript">
+  function printImg(source, without_text) {
+    var win = window.open("")
+    let printCSS;
+    // Page formatting for 1" Avery Sheet
+    if (without_text){
+      printCSS = 
+      `
+      <style>
+        @page {
+          margin: 13.875mm 15.875mm 0mm 15mm
+        }
+      </style>
+      `
+    }
+    else{
+      printCSS = 
+      `
+      <style>
+        @page {
+          margin: 7.5mm 4.7625mm 0mm 15.7625mm
+        }
+      </style>
+      `
+    }
+    win.document.write(printCSS)
+
+    // Add html template as new page to new window
+    for(let i = 0; i < source.length - 1; i++){
+      win.document.write('<div style="text-align: left; height:0;"><img src="' + 'data:image/png;base64,' + source[i] + '"/></div><div style="height:0; page-break-after: always"></div>')
+    }
+
+    // Add last image, print and close the new window
+    win.document.write('<div style="text-align: left; height:0;"><img src="' + 'data:image/png;base64,' + source[source.length-1] + '" onload="window.print();window.close()" /></div>')
+
+    win.focus()
+  }
+</script>
+
+<!--Top Panel-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-primary">
+      <div class="panel-heading text-center panel-relative">
+        <strong>Review Printed {{name}}</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Table-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">{% include 'inc/table.html' %}</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <!--Print Button-->
+    <div class="text-center">
+      <button onclick="printImg({{image}},{{without_text}})"; class="btn btn-xl btn-primary">
+        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+        Print
+      </button> 
+    </div>
+  </div>
+</div>
+<!--Preview Images-->
+{% for img in image%}
+<div class="row" style="padding-top: 100px">
+  <div class="text-center">
+    <h2>Page {{ forloop.counter }}</h2>
+    <img src="data:image/png;base64,{{img}}" />
+  </div>
+</div>
+{% endfor%}
+
+{% endblock %}

@@ -28,26 +28,25 @@ def get_img_b64(img):
     return str(base64.b64encode(stream.getvalue()), encoding='ascii')
 
 
-def get_qr_text(max_size, text, font='TahomaBold'):
-    font_size = 56
-    tmpimg = Image.new('L', max_size, 'white')
-    text_too_large = True
-    while text_too_large:
+def get_qr_text(size, text, font='ArialMT', font_size=100):
+    img = Image.new('L', size, 'white')
+    flag = True
+    while flag:
         file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
         try:
-            fnt = ImageFont.truetype(file_path, font_size)
+            fnt = ImageFont.truetype(file_path,font_size)
         except Exception:
             fnt = ImageFont.load_default()
+            flag = False
 
-        draw = ImageDraw.Draw(tmpimg)
+        draw = ImageDraw.Draw(img)
         w, h = draw.textsize(text, font=fnt)
-        if w < max_size[0] - 4 and h < max_size[1] - 4:
-            text_too_large = False
+        if w < size[0] - 4 and h < size[1] - 4:
+            flag = False
         font_size -= 1
+    W, H = size
+    draw.text(((W-w)/2, (H-h)/2), text, font=fnt, fill='black')
 
-    img = Image.new('L', (w, h), 'white')
-    draw = ImageDraw.Draw(img)
-    draw.text((0, 0), text, font=fnt, fill='black')
     return img
 
 
@@ -102,3 +101,23 @@ def get_concat(im1, im2, direction='right'):
     dst.paste(im2, (im2_x, im2_y))
 
     return dst
+
+
+def get_concat_v(im1, im2):
+    dst = Image.new('L', (im1.width, im1.height + im2.height), 'white')
+    dst.paste(im1, (0, 0))
+    dst.paste(im2, (0, im1.height))
+    return dst
+
+
+def add_print_padding_left(img, padding):
+    blank = Image.new('L', (padding, img.height), 'white')
+    img = get_concat(blank, img)
+    return img
+
+
+def add_print_padding_v(img, padding):
+    blank = Image.new('L', (img.width, padding), 'white')
+    img = get_concat_v(blank, img)
+    img = get_concat_v(img, blank)
+    return img
