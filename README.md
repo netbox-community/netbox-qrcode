@@ -60,6 +60,7 @@ PLUGINS_CONFIG = {
         'with_text': True,
         'text_fields': ['name', 'serial'],
         'font': 'ArialMT',
+        'font_size': 12, # If the value is 0 or the line does not exist, then the text is automatically adjusted
         'custom_text': 'Property of SomeCompany\ntel.8.800333554-CALL',
         'text_location': 'up',
         'qr_version': 1,
