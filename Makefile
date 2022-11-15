@@ -1,5 +1,5 @@
-PYTHON_VER?=3.7
-NETBOX_VER?=v3.0.7
+PYTHON_VER?=3.8
+NETBOX_VER?=v3.2.9
 
 NAME=netbox-qrcode
 
@@ -41,7 +41,7 @@ adduser:
 collectstatic:
 	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} run netbox python manage.py collectstatic
 
-makemigrations:
+migrations:
 	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} up -d postgres
 	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} \
 	run netbox python manage.py makemigrations --name ${BUILD_NAME}
