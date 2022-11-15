@@ -43,7 +43,11 @@ class QRCode(PluginTemplateExtension):
                             if getattr(obj, text_field).get(cfn):
                                 text.append('{}'.format(getattr(obj, text_field).get(cfn)))
                         except AttributeError:
-                            pass
+                            # fix for nb3.3: trying to get cable termination and device in same way as custom field
+                            if type(getattr(obj, text_field)) is list:
+                                first_element = next(iter(getattr(obj, text_field)), None)
+                                if first_element and getattr(first_element, cfn, None):
+                                    text.append('{}'.format(getattr(first_element, cfn)))
                     else:
                         text.append('{}'.format(getattr(obj, text_field)))
             custom_text = config.get('custom_text')
