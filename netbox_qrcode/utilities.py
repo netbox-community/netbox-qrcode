@@ -30,7 +30,7 @@ def get_img_b64(img):
 
 def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
 
-    tmpimg = Image.new('L', max_size, 'white')
+    tmpimg = Image.new('P', max_size, 'white')
     text_too_large = True
 
     #If no Font Size in Config File, then Match the text to the QR Code
