@@ -78,7 +78,7 @@ def get_concat(im1, im2, direction='right'):
             'Invalid direction "{}" (must be one of "left", "right", "up", or "down")'.format(direction)
         )
 
-    dst = Image.new('L', (width, height), 'white')
+    dst = Image.new('P', (width, height), 'white')
 
     if direction == 'right' or direction == 'left':
         if im1.height > im2.height:
