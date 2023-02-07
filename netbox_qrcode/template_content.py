@@ -2,6 +2,7 @@ from packaging import version
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.template import engines
 
 from extras.plugins import PluginTemplateExtension
 
@@ -29,31 +30,36 @@ class QRCode(PluginTemplateExtension):
 
         qr_img = get_qr(url, **qr_args)
         if config.get('with_text'):
-            text = []
-            for text_field in config.get('text_fields', []):
-                cfn = None
-                if '.' in text_field:
-                    try:
-                        text_field, cfn = text_field.split('.')
-                    except ValueError:
-                        cfn = None
-                if getattr(obj, text_field, None):
-                    if cfn:
+            if config.get('text_template'):
+                django_engine = engines["django"]
+                template = django_engine.from_string(config.get('text_template'))
+                text = template.render({'obj': obj})
+            else:
+                text = []
+                for text_field in config.get('text_fields', []):
+                    cfn = None
+                    if '.' in text_field:
                         try:
-                            if getattr(obj, text_field).get(cfn):
-                                text.append('{}'.format(getattr(obj, text_field).get(cfn)))
-                        except AttributeError:
-                            # fix for nb3.3: trying to get cable termination and device in same way as custom field
-                            if type(getattr(obj, text_field)) is list:
-                                first_element = next(iter(getattr(obj, text_field)), None)
-                                if first_element and getattr(first_element, cfn, None):
-                                    text.append('{}'.format(getattr(first_element, cfn)))
-                    else:
-                        text.append('{}'.format(getattr(obj, text_field)))
-            custom_text = config.get('custom_text')
-            if custom_text:
-                text.append(custom_text)
-            text = '\n'.join(text)
+                            text_field, cfn = text_field.split('.')
+                        except ValueError:
+                            cfn = None
+                    if getattr(obj, text_field, None):
+                        if cfn:
+                            try:
+                                if getattr(obj, text_field).get(cfn):
+                                    text.append('{}'.format(getattr(obj, text_field).get(cfn)))
+                            except AttributeError:
+                                # fix for nb3.3: trying to get cable termination and device in same way as custom field
+                                if type(getattr(obj, text_field)) is list:
+                                    first_element = next(iter(getattr(obj, text_field)), None)
+                                    if first_element and getattr(first_element, cfn, None):
+                                        text.append('{}'.format(getattr(first_element, cfn)))
+                        else:
+                            text.append('{}'.format(getattr(obj, text_field)))
+                custom_text = config.get('custom_text')
+                if custom_text:
+                    text.append(custom_text)
+                text = '\n'.join(text)
             text_img = get_qr_text(qr_img.size, text, config.get('font'))
             qr_with_text = get_concat(qr_img, text_img, config.get('text_location', 'right'))
 
