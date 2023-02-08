@@ -10,6 +10,12 @@ This plugin in compatible with [NetBox](https://netbox.readthedocs.org/) 2.8 and
 
 ## Installation
 
+If Netbox was installed according to the standard installation instructions. It may be necessary to activate the virtual environment.
+
+```
+source /opt/netbox/venv/bin/activate
+```
+
 The plugin is available as a Python package in pypi and can be installed with pip
 
 ```
