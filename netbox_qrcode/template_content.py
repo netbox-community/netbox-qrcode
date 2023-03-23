@@ -33,7 +33,7 @@ class QRCode(PluginTemplateExtension):
             if config.get('text_template'):
                 django_engine = engines["django"]
                 template = django_engine.from_string(config.get('text_template'))
-                text = template.render({'obj': obj})
+                text = template.render({'obj': obj, 'url': url})
             else:
                 text = []
                 for text_field in config.get('text_fields', []):
