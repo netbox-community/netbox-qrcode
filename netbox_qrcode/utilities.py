@@ -39,7 +39,8 @@ def get_qr_text(max_size, text, font='TahomaBold'):
         except Exception:
             fnt = ImageFont.load_default()
 
-        w, h = fnt.getbbox(text)
+        dims = fnt.getbbox(text)
+        w, h = (dims[2] - dims[0]), (dims[3] - dims[1])
         if w < max_size[0] - 4 and h < max_size[1] - 4:
             text_too_large = False
         font_size -= 1
