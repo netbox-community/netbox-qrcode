@@ -37,6 +37,9 @@ class QRCodeConfig(PluginConfig):
                 'b_terminations.device',
                 'b_terminations'
                 ]
+        },
+        'location': {
+            'text_fields': ['name']
         }
     }
 

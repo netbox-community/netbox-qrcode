@@ -94,4 +94,11 @@ class CableQRCode(QRCode):
         return self.x_page()
 
 
-template_extensions = [DeviceQRCode, RackQRCode, CableQRCode]
+class LocationQRCode(QRCode):
+    model = 'dcim.location'
+
+    def left_page(self):
+        return self.x_page()
+
+
+template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode]
