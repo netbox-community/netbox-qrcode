@@ -40,7 +40,13 @@ class QRCodeConfig(PluginConfig):
         },
         'location': {
             'text_fields': ['name']
-        }
+        },
+        'powerfeed': {
+            'text_fields': ['name'],
+        },
+        'powerpanel': {
+            'text_fields': ['name']
+        }        
     }
 
 config = QRCodeConfig # noqa E305
