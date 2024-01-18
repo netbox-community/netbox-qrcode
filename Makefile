@@ -1,5 +1,5 @@
 PYTHON_VER?=3.8
-NETBOX_VER?=v3.5.0
+NETBOX_VER?=v3.7.1
 
 NAME=netbox-qrcode
 

@@ -107,4 +107,18 @@ class LocationQRCode(QRCode):
         return self.x_page()
 
 
-template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode]
+class PowerFeedQRCode(QRCode):
+    model = 'dcim.powerfeed'
+
+    def right_page(self):
+        return self.x_page()
+
+
+class PowerPanelQRCode(QRCode):
+    model = 'dcim.powerpanel'
+
+    def right_page(self):
+        return self.x_page()    
+
+
+template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
