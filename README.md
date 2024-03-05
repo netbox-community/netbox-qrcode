@@ -51,6 +51,7 @@ QR Code. The following values are available:
 is.
 * `qr_border`: Integer (default 4),  controls how many boxes thick the border should be
 (the default is 4, which is the minimum according to the specs).
+* `url_template`: Jinja2 template applied to url with {{ obj }}  as context
 
 ### Per object options
 
