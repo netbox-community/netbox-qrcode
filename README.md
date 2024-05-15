@@ -6,7 +6,10 @@ This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) an
 
 ## Compatibility
 
-This plugin in compatible with [NetBox](https://netbox.readthedocs.org/) 2.8 and later.
+| Plugin Version | NetBox Version | Tested on                      |
+| ------------- |:-------------| :-----:|
+| 0.0.11          | >= 3.7.0        | 3.7.x |
+| 0.0.12          | >= 4.0.0        | v4.0.2                   |
 
 ## Installation
 
