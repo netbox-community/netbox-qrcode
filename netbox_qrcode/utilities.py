@@ -30,12 +30,12 @@ def get_img_b64(img):
 
 def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
     tmpimg = Image.new('P', max_size, 'white')
-    file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
 
     if font_size == 0:
         text_too_large = True
         font_size = 56
         while text_too_large:
+            file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
             try:
                 fnt = ImageFont.truetype(file_path, font_size)
             except Exception:
@@ -47,6 +47,7 @@ def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
                 text_too_large = False
             font_size -= 1
     else:
+        file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
         try:
             fnt = ImageFont.truetype(file_path, font_size)
         except Exception:
