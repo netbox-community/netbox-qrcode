@@ -28,24 +28,34 @@ def get_img_b64(img):
     return str(base64.b64encode(stream.getvalue()), encoding='ascii')
 
 
-def get_qr_text(max_size, text, font='TahomaBold'):
-    font_size = 56
-    tmpimg = Image.new('L', max_size, 'white')
-    text_too_large = True
-    while text_too_large:
+def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
+    tmpimg = Image.new('P', max_size, 'white')
+
+    if font_size == 0:
+        text_too_large = True
+        font_size = 56
+        while text_too_large:
+            file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
+            try:
+                fnt = ImageFont.truetype(file_path, font_size)
+            except Exception:
+                fnt = ImageFont.load_default()
+
+            draw = ImageDraw.Draw(tmpimg)
+            left, top, w, h = draw.textbbox((0, 0), text=text, font=fnt)
+            if w < max_size[0] - 4 and h < max_size[1] - 4:
+                text_too_large = False
+            font_size -= 1
+    else:
         file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
         try:
             fnt = ImageFont.truetype(file_path, font_size)
         except Exception:
             fnt = ImageFont.load_default()
-
         draw = ImageDraw.Draw(tmpimg)
         left, top, w, h = draw.textbbox((0, 0), text=text, font=fnt)
-        if w < max_size[0] - 4 and h < max_size[1] - 4:
-            text_too_large = False
-        font_size -= 1
 
-    img = Image.new('L', (w, h), 'white')
+    img = Image.new('P', (w, h), 'white')
     draw = ImageDraw.Draw(img)
     draw.text((0, 0), text, font=fnt, fill='black')
     return img
