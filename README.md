@@ -13,7 +13,7 @@ This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) an
 | Plugin Version | NetBox Version | Tested on                      |
 | ------------- |:-------------| :-----:|
 | 0.0.11          | >= 3.7.0        | 3.7.x |
-| 0.0.13          | >= 4.0.0        | v4.0.2                   |
+| 0.0.13          | >= 4.0.2        | v4.0.2                   |
 
 ## Installation
 
