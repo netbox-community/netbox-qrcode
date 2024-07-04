@@ -1,4 +1,3 @@
-
 # This Docker Compose Debug File supports you with debugging in VSCode For more details see README.md
 
 # Overwrites parts of the service from the Docker-Compose file:
