@@ -1,8 +1,5 @@
 // Is required for debugging Docker-Compose in VSCode.
-
-{
-    //"pythonArgs": ["-Xfrozen_modules=off"],
-    
+{    
     "configurations": [
         {
             
