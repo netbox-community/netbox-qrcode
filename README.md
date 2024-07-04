@@ -105,6 +105,33 @@ Developing tools for this project based on [ntc-netbox-plugin-onboarding](https:
 
 Issues and pull requests are welcomed.
 
+## Debugging
+The following describes how to start the debugging mode.
+Doeses Docker Compose Debug File supports you with debugging in VSCode
+
+Recommended VSCode Extensions (I think):
+- Docker (Extension ID: ms-azuretools.vscode-docker)
+- Python (Extension ID: ms-python.python)
+- Python Debugger (Extension ID: ms-python.debugpy)
+
+Start Docker-Compose as debug Version:
+- Start Docker-Compose with Docker-Compose-Debug bout the vsCode terminal and enter the following line:
+
+```docker-compose -f develop/docker-compose.yml -f develop/docker-compose-debug.yml up --build```
+
+- Wait until all containers are started and Starting development server at http://0.0.0.0:8000/ is displayed.
+
+Start Debug:
+- Go to "Run and Debug" and start the debug "Docker: Python -Django" (The footer of vsCode should become Orang.)
+- Set a breakpoint in the code 
+- Open the NetBox page with the plugin.
+
+Helpful documentary:
+https://medium.com/django-unleashed/debug-django-application-in-docker-container-using-vscode-ca5967340262
+https://testdriven.io/blog/django-debugging-vs-code/
+https://github.com/microsoft/debugpy
+https://docs.python.org/3/using/cmdline.html#cmdoption-X
+
 ## Screenshots
 
 Device QR code with text label
