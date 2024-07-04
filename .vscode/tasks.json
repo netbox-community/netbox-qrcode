@@ -1,5 +1,4 @@
 // Is required for debugging Docker-Compose in VSCode.
-
 {
     "version": "2.0.0",
     "tasks": [
