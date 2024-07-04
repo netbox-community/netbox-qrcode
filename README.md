@@ -106,8 +106,7 @@ Developing tools for this project based on [ntc-netbox-plugin-onboarding](https:
 Issues and pull requests are welcomed.
 
 ## Debugging
-The following describes how to start the debugging mode.
-This Docker Compose Debug File supports you with debugging in VSCode
+The following describes how to start the debugging mode in VSCode.
 
 Files directly related to the topic:
 .vscode/launch.json
