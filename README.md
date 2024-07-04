@@ -107,7 +107,13 @@ Issues and pull requests are welcomed.
 
 ## Debugging
 The following describes how to start the debugging mode.
-Doeses Docker Compose Debug File supports you with debugging in VSCode
+This Docker Compose Debug File supports you with debugging in VSCode
+
+Files directly related to the topic:
+.vscode/launch.json
+.vscode/tasks.json
+.dockerignore
+develop/docker-compose-debug.yml
 
 Recommended VSCode Extensions (I think):
 - Docker (Extension ID: ms-azuretools.vscode-docker)
