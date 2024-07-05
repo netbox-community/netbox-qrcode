@@ -9,12 +9,14 @@ services:
     # - Install Current Version of DebugPy for Debug in Visual Studio Code https://github.com/microsoft/debugpy
     # - PYDEVD_DISABLE_FILE_VALIDATION=1 --> You’re telling the debugger to skip this validation and proceed with debugging
     # - Migrate Netbox
+    # - Create a user (superuser) for Netbox / Django so that you can log in directly to Netbox. More Infos: makesuperuser.py
     # - Start Netbox with Modul DebugPy (Xfrozen_modules=off --> Disable Frozen Moduls in DebugPy Mode; 5678 is Debug Port)
     command: >
         sh -c "echo Run Netbox Django in debug mode &&
                pip install debugpy &&
                PYDEVD_DISABLE_FILE_VALIDATION=1 &&
-               python manage.py migrate && 
+               python manage.py migrate &&
+               python manage.py makesuperuser &&
                python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --insecure"
     ports:
       - '8000:8000'

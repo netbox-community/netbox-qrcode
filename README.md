@@ -100,6 +100,12 @@ PLUGINS_CONFIG = {
 }
 ```
 
+# Development
+
+## Default Login (Netbox, DB, PostgreSQL, Redis)
+If the project is started via Docker-Compose, the first login to Netbox is possible with the login data from the makesuperuser.py file.
+Other login data for the database, PostgreSQL and Redis can be found in the dev.env file.
+
 ## Contributing
 Developing tools for this project based on [ntc-netbox-plugin-onboarding](https://github.com/networktocode/ntc-netbox-plugin-onboarding) repo.
 
@@ -132,12 +138,12 @@ Start Debug:
 - Open the NetBox page with the plugin.
 
 Helpful documentary:
-https://medium.com/django-unleashed/debug-django-application-in-docker-container-using-vscode-ca5967340262
-https://testdriven.io/blog/django-debugging-vs-code/
-https://github.com/microsoft/debugpy
-https://docs.python.org/3/using/cmdline.html#cmdoption-X
+- https://medium.com/django-unleashed/debug-django-application-in-docker-container-using-vscode-ca5967340262
+- https://testdriven.io/blog/django-debugging-vs-code/
+- https://github.com/microsoft/debugpy
+- https://docs.python.org/3/using/cmdline.html#cmdoption-X
 
-## Screenshots
+# Screenshots
 
 Device QR code with text label
 ![Device QR Code](docs/img/qrcode.png)
