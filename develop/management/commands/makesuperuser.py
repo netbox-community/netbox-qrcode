@@ -14,6 +14,7 @@ User = get_user_model()
 
 class bcolors:
     PURPLE = '\033[95m'
+    RED = '\033[91m'
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -30,7 +31,7 @@ class Command(BaseCommand):
                 print(f"{bcolors.PURPLE}A superuser for NetBox / Django '{username}' was created with email '{email}' and password '{password}'")
                 print(f"{bcolors.PURPLE}===================================")
             else:
-                print("admin user found. Skipping super user creation")
+                print("{bcolors.PURPLE}A superuser for NetBox / Django Admin user already exists or was created during the first Docker-Compose start.")
                 print(u)
         except Exception as e:
-            print(f"There was an error: {e}")
+            print(f"{bcolors.RED}There was an error: {e}")
