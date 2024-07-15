@@ -41,7 +41,7 @@ The following options are available:
 * `with_text`: Boolean (default True). Text label will be added to QR code image if enabled.
 * `text_template`: Jinja2 template with {{ obj }}  as context, using it ignores `text_fields` and `custom_text`. The following example shows the name and the site in two lines including labels:
   ```
-  'text_template': 'Name: {{ obj.name }}\nSite: {{ obj.site }} }}',
+  'text_template': 'Name: {{ obj.name }}\nSite: {{ obj.site }}',
   ```
 * `text_fields`: List of String (default ['name']). Text fields of an object that will be added as text label to QR image. It's possible to use custom field values.
 * `font`: String (default TahomaBold) Font name for text label ( Some font include in package, see fonts dir).
