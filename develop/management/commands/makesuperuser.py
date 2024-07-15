@@ -31,7 +31,7 @@ class Command(BaseCommand):
                 print(f"{bcolors.PURPLE}A superuser for NetBox / Django '{username}' was created with email '{email}' and password '{password}'")
                 print(f"{bcolors.PURPLE}===================================")
             else:
-                print("{bcolors.PURPLE}A superuser for NetBox / Django Admin user already exists or was created during the first Docker-Compose start.")
+                print(f"{bcolors.PURPLE}A superuser for NetBox / Django Admin user already exists or was created during the first Docker-Compose start.")
                 print(u)
         except Exception as e:
             print(f"{bcolors.RED}There was an error: {e}")
