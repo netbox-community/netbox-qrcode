@@ -10,6 +10,7 @@ NETBOX_VER?=v4.0.2
 NAME=netbox-qrcode
 
 COMPOSE_FILE=./develop/docker-compose.yml
+COMPOSE_FILE_DEBUG=./develop/docker-compose-debug.yml
 BUILD_NAME=netbox_qrcode
 VERFILE=./netbox_qrcode/version.py
 
