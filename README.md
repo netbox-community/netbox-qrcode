@@ -39,7 +39,12 @@ Restart NetBox and add `netbox-qrcode` to your local_requirements.txt
 The following options are available:
 
 * `with_text`: Boolean (default True). Text label will be added to QR code image if enabled.
-* `text_template`: Jinja2 template with {{ obj }}  as context, using it ignores `text_fields` and `custom_text`
+* `text_template`: [Jinja2](https://jinja.palletsprojects.com/) template with {{ obj }} as context for device, rack, etc., using it ignores `text_fields` and `custom_text`.
+
+  Example to output name and site in two lines with caption (See also screenshots below):
+  ```
+  'text_template': 'Name: {{ obj.name }}\nSite: {{ obj.site }}',
+  ```
 * `text_fields`: List of String (default ['name']). Text fields of an object that will be added as text label to QR image. It's possible to use custom field values.
 * `font`: String (default TahomaBold) Font name for text label ( Some font include in package, see fonts dir).
 * `text_location`: Where to render the text, relative to the QR code.  Valid values are `"right"` (default), `"left"`", `"up"`, and `"down"`.
@@ -115,3 +120,6 @@ Rack QR code
 
 Cable QR code
 ![Cable QR Code](docs/img/qrcode_cable.png)
+
+Device QR code via Jinja2 "text_template" Parameter (Multiline and labeled)
+![Cable QR Code](docs/img/qrcode_text_template.png)
