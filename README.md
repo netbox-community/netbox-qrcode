@@ -118,6 +118,7 @@ With the extension ID you can search for the extension more easily.
 - Docker (Extension ID: ms-azuretools.vscode-docker)
 - Python (Extension ID: ms-python.python)
 - Python Debugger (Extension ID: ms-python.debugpy)
+- Django (Extension ID: batisteo.vscode-django)
 - Makefile-Tools (extension ID: ms-vscode.makefile-tools)
 
 ### Easy start of the development environment
