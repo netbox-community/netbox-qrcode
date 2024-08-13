@@ -15,8 +15,9 @@ class QRCodeConfig(PluginConfig):
         'with_text': True,
         'with_qr': True,
         'text_fields': ['name', 'serial'],
-        'font': '\'Trebuchet MS\', sans-serif',
+        'font': 'TahomaBold',
         'font_size': '3mm',
+        'font_weight': 'normal',
         'custom_text': None,
         'text_location': 'right',
 
