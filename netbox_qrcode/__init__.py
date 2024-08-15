@@ -44,9 +44,11 @@ class QRCodeConfig(PluginConfig):
         'device': {
             'text_fields': ['name', 'serial']
         },
+
         'rack': {
             'text_fields': ['name']
         },
+
         'cable': {
             'text_fields': [
                 '_termination_a_device',
@@ -59,17 +61,41 @@ class QRCodeConfig(PluginConfig):
                 'b_terminations'
                 ]
         },
+
         'location': {
             'text_fields': ['name']
         },
+
         'powerfeed': {
             'text_fields': ['name'],
         },
+
         'powerpanel': {
             'text_fields': ['name']
-        },   
+        },  
 
-        'logo': ''  
+#####################
+
+        'device_2': {
+            'with_qr': False,
+            'text_location': 'center',
+            'title': 'Example',
+            'text_template': '<div style="display: inline-block; height: 5mm; width: 15mm"><img src="/static/netbox_logo.svg" height="100%" width="100%"></div><br>'
+                             '{{ obj.name }} <br>'
+                             '<div style="display: inline-block; height: 10mm; width: 10mm"><img src="data:image/png;base64,{{qrCode}}" height="100%" width="100%"/></div><br>' 
+                             'Device: {{ obj.id|stringformat:"07d" }}'
+                             '<p>&#128541; <font color="red"><b> My label design </b> </font> &#128541;</p>',
+                             
+            'label_width': '56mm',
+            'label_height': '32mm',
+            'label_edge_top': '0mm',
+            'label_edge_left': '0mm',
+            'label_edge_right': '0mm',
+        },
+        
+################
+
+
     }
 
 config = QRCodeConfig # noqa E305

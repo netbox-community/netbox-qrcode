@@ -3,9 +3,23 @@
     // Print view for the label.
     function printPageArea(areaID)
     {
+        //Trying to set Chrome Margines to none without specifying the sheet size does not work yet.
+        //But here is the approach
+        //var css  = '<style type="text/css">';
+        //    css += '    @media print';
+        //    css += '    {';
+        //    css += '        @page {';
+        //    //css += '           size: A4;';
+        //    css += '           margin: 0;';
+        //    css += '        }';
+        //    css += '    }';
+        //    css += '</style>';
+
         var printContent = document.getElementById(areaID).innerHTML;
         var originalContent = document.body.innerHTML;
+        
         document.body.innerHTML = printContent;
+        //document.body.innerHTML += css;
         window.print();
         document.body.innerHTML = originalContent;
     }
@@ -13,6 +27,7 @@
 </script>
 
 <style>
+
     /* For label visualization in Netbox, not for printing. */
     .QR-Code-Label_{{labelDesignNo}} {
         height: {{label_height}};
