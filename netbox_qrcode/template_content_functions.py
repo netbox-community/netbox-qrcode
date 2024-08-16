@@ -26,14 +26,10 @@ def config_for_modul(parentSelf, labelDesignNo):
     # and overwrite the default configuration fields.
     obj_cfg = config.get(parentSelf.model.replace('dcim.', '') + confModulsufix) # get spezific object settings
     
-    print(obj_cfg)
-
-    if obj_cfg is None: 
-        return '' # Abort if no config data. 
-
-    config.update(obj_cfg) # Ovverride default confiv Values
-
-    return config
+    if obj_cfg is not None: 
+        return config.update(obj_cfg) # Ovverride default confiv Values
+    else:
+        return config # No module customisation
 
 ##################################
 # Create QR-Code
