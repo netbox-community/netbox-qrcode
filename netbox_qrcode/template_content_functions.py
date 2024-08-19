@@ -27,7 +27,8 @@ def config_for_modul(parentSelf, labelDesignNo):
     obj_cfg = config.get(parentSelf.model.replace('dcim.', '') + confModulsufix) # get spezific object settings
     
     if obj_cfg is not None: 
-        return config.update(obj_cfg) # Ovverride default confiv Values
+        config.update(obj_cfg) # Ovverride default confiv Values
+        return config
     else:
         return config # No module customisation
 
