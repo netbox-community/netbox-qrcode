@@ -13,7 +13,7 @@ class QRCodeConfig(PluginConfig):
     default_settings = {
 	
         ################################## 
-		# General Plugin
+        # General Plugin
         'title': '',
         
         ################################## 
