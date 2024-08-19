@@ -56,7 +56,8 @@ Center text only
         'device_2': {
             'title': 'Example',
             'font_size': '4mm',
-            'text_location': 'center',
+            'text_align_horizontal': 'center',
+            'text_align_vertical': 'middle',
             'label_qr_width': '20mm',
             'label_qr_height': '20mm',
             'label_qr_text_distance': '0mm',
@@ -79,7 +80,8 @@ Text links only
         'device_2': {
             'title': 'Example',
             'font_size': '4mm',
-            'text_location': 'left',
+            'text_align_horizontal': 'left',
+            'text_align_vertical': 'middle',
             'label_qr_width': '20mm',
             'label_qr_height': '20mm',
             'label_qr_text_distance': '0mm',
@@ -133,6 +135,8 @@ Upright, large font with line break and serial number
             'label_edge_left': '0mm',
             'label_edge_right': '0mm',
             'text_location': 'up',
+            'text_align_horizontal': 'center',
+            'text_align_vertical': 'top',
             'label_edge_bottom': '2mm',
         },
 ```
@@ -154,7 +158,9 @@ Upright, large font with line break and serial number
             'label_edge_top': '2mm',
             'label_edge_left': '0mm',
             'label_edge_right': '0mm',
-             'text_location': 'down',
+            'text_location': 'down',
+            'text_align_horizontal': 'center',
+            'text_align_vertical': 'top',
         },
 ```
 
@@ -175,7 +181,7 @@ Small label
             'label_edge_top': '2mm',
             'label_edge_left': '0mm',
             'label_edge_right': '0mm',
-             'text_location': 'down',
+            'text_location': 'down',
         },
 ```
 
@@ -188,7 +194,8 @@ This way, many label design options should be possible. The design of the label 
 ```Python
         'device_2': {
             'with_qr': False,
-            'text_location': 'center',
+            'text_align_horizontal': 'center',
+            'text_align_vertical': 'middle',
             'title': 'Example',
             'text_template': '<div style="display: inline-block; height: 5mm; width: 15mm"><img src="/static/netbox_logo.svg" height="100%" width="100%"></div><br>'
                              '{{ obj.name }} <br>'

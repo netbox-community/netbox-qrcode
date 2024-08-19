@@ -36,7 +36,26 @@ The following options are available:
     'text_location': 'left',
     'text_location': 'up',
     'text_location': 'down',
-    'text_location': 'center', # Text in the center if no QR code is used.
+    ```
+
+*  `text_align_horizontal`: 
+
+    Defines where the text is to be displayed horizontally in the text area.
+    
+    ```Python
+    'text_align_horizontal': 'left', # DEFAULT
+    'text_align_horizontal': 'center',
+    'text_align_horizontal': 'right',
+    ```
+
+*  `text_align_vertical`: 
+
+    Defines where the text is to be displayed vertically in the text area.
+    
+    ```Python
+    'text_align_horizontal': 'middle', # DEFAULT
+    'text_align_horizontal': 'top',
+    'text_align_horizontal': 'bottom',
     ```
 
     ### Text source (Option A)
@@ -55,8 +74,8 @@ The following options are available:
 
 * `custom_text`: Additional text label to QR code image (will be added after text_fields).
     ```Python
-    'text_location': None, # DEFAULT
-    'text_location': 'My Text',
+    'custom_text': None, # DEFAULT
+    'custom_text': 'My Text',
     ```
     ### Text source (Option B)
 
@@ -494,6 +513,8 @@ PLUGINS_CONFIG = {
         # Text content
         'with_text': True,
         'text_location': 'right',
+        'text_align_horizontal': 'left',
+        'text_align_vertical': 'middle',
         
         # Text source (Option A)
         'text_fields': ['name', 'serial'],
@@ -603,5 +624,36 @@ PLUGINS_CONFIG = {
 [Go to Example label configurations >>](docs/README_Subpages/README_Configuration_ExampleLabelConf.md)
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
+
+
+# Other plugin support
+
+The following plugins are currently supported.
+
+### netbox-inventory 
+
+A Netbox plugin for hardware inventory. (https://github.com/ArnesSI/netbox-inventory)
+
+* `netbox_inventory.asset`:
+
+    ```Python
+    PLUGINS_CONFIG = {
+        'netbox_qrcode': {
+            'netbox_inventory.asset': {
+            'title': 'My Litle Label 1',
+            },
+        }
+    }
+    ```
+
+    ```Python
+    PLUGINS_CONFIG = {
+        'netbox_qrcode': {
+            'netbox_inventory.asset_2': {
+            'title': 'My Litle Label 2',
+            },
+        }
+    }
+    ```
 
 [<< Back to README start](/README.md)

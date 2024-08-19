@@ -52,6 +52,8 @@ class QRCode(PluginTemplateExtension):
                                                                     'with_text': config.get('with_text'),
                                                                     'text': text,
                                                                     'text_location': config.get('text_location'),
+                                                                    'text_align_horizontal': config.get('text_align_horizontal'),
+                                                                    'text_align_vertical': config.get('text_align_vertical'),
                                                                     'font': config.get('font'),
                                                                     'font_size': config.get('font_size'),
                                                                     'font_weight': config.get('font_weight'),
@@ -149,5 +151,15 @@ class PowerPanelQRCode(QRCode):
     def right_page(self):
         return self.Create_PluginContent()
 
+##################################
+# Other plugins support
+
+# Class for creating a QR code for the Plugin: Netbox-Inventory (https://github.com/ArnesSI/netbox-inventory)
+class Plugin_Netbox_Inventory(QRCode):
+    model = 'netbox_inventory.asset' # Info for Netbox in which model the plugin should be integrated.
+
+    def right_page(self):
+        return self.Create_PluginContent()
+
 # Connects Netbox Core with the plug-in classes
-template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
+template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode, Plugin_Netbox_Inventory]

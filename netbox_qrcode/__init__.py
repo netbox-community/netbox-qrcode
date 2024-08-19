@@ -20,6 +20,8 @@ class QRCodeConfig(PluginConfig):
         # Text content
         'with_text': True,
         'text_location': 'right',
+        'text_align_horizontal': 'left',
+        'text_align_vertical': 'middle',
         
         # Text source (Option A)
         'text_fields': ['name', 'serial'],
@@ -99,7 +101,7 @@ class QRCodeConfig(PluginConfig):
             'text_fields': ['name']
         },   
 
-        'logo': ''  
+        'logo': '',
     }
 
 config = QRCodeConfig # noqa E305
