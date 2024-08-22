@@ -4,7 +4,7 @@
 The plugin is configured in the Netbox configuration file: configuration.py
 If you have followed the standard installation of Netbox, the configuration file is located under: /opt/netbox/netbox/netbox/configuration.py
 
-The following options are available:
+The following options are available. If the same variable name is specified several times in several lines, these are different examples. Entries with ‘# DEFAULT’ are system defaults.
 
 ## General Plugin
 
@@ -12,7 +12,7 @@ The following options are available:
 
     A title is displayed in the label window. This can be expanded with information. Useful if you want to provide several label variants for devices, for example.
     ```Python
-    'title': '', #DEFAULT
+    'title': '', # DEFAULT
     'title': 'My text extension in the plugin heading.',
     ```
 
@@ -145,6 +145,17 @@ The following options are available:
     'font_weight': 'bold',
     'font_weight': 'lighter', 
     'font_weight': 'bolder', 
+    ```
+
+* `font_color`: 
+
+    Determines how dense the font is. (More Color Infos https://www.w3schools.com/html/html_colors.asp)
+    
+    ```Python
+    'font_color': 'black', # DEFAULT
+    'font_color': 'red',
+    'font_color': 'rgb(255, 0, 0)',  # blue
+    'font_color': '#6a5acd', # violett
     ```
 
 ## QR-Code
@@ -528,6 +539,7 @@ PLUGINS_CONFIG = {
         'font': 'TahomaBold',
         'font_size': '3mm',
         'font_weight': 'normal',
+        'font_color': 'black',
         
         ################################## 
         # QR-Code

@@ -35,6 +35,7 @@ class QRCodeConfig(PluginConfig):
         'font': 'TahomaBold',
         'font_size': '3mm',
         'font_weight': 'normal',
+        'font_color': 'black',
         
         ################################## 
         # QR-Code

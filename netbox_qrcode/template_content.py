@@ -57,6 +57,7 @@ class QRCode(PluginTemplateExtension):
                                                                     'font': config.get('font'),
                                                                     'font_size': config.get('font_size'),
                                                                     'font_weight': config.get('font_weight'),
+                                                                    'font_color': config.get('font_color'),
                                                                     'with_qr': config.get('with_qr'),
                                                                     'label_qr_width': config.get('label_qr_width'),
                                                                     'label_qr_height': config.get('label_qr_height'),
