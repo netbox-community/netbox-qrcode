@@ -210,3 +210,36 @@ This way, many label design options should be possible. The design of the label 
             'label_edge_right': '0mm',
         },
 ```
+
+## Example 11 - Cable Label vertical writing.
+
+This example shows how to write vertically, e.g. for cable labeling on a wide but not so high single label.
+
+![Cable QR Code](/docs/img/Configuration_Label_Example_11.png)
+
+```Python
+        'cable': {
+            'title': 'Für Kabel',
+            'with_qr': False,
+            'label_edge_left': '0.00mm',
+            'label_edge_right': '0.00mm',
+            'label_edge_top': '0.00mm',
+            'text_align_vertical': 'middle',
+            'text_align_horizontal': 'center',
+	    'text_template': '<span style="writing-mode: vertical-lr; transform: scale(-1);">'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+                             '{{ obj.label }}</br>'
+	                     '</span>'
+        },
+```
