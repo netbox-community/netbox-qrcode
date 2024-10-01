@@ -1,0 +1,13 @@
+<div style="height: {{ label_qr_height }}; width: {{ label_qr_width }}; 
+            max-height: {{ label_height }}; max-width: {{ label_width }};
+        
+        {% if with_text %}
+            {% if text_location == "right" %} margin-right: {{ label_qr_text_distance }}; {% endif %}
+            {% if text_location == "left" %} margin-left: {{ label_qr_text_distance }}; {% endif %}
+            {% if text_location == "up" %} margin-top: {{ label_qr_text_distance }}; {% endif %}
+            {% if text_location == "down" %} margin-bottom: {{ label_qr_text_distance }}; {% endif %}
+        {% endif %}
+
+        ">
+    <img src="data:image/png;base64,{{qrCode}}" height="100%" width="100%"/>
+</div>
