@@ -243,3 +243,52 @@ This example shows how to write vertically, e.g. for cable labeling on a wide bu
 	                     '</span>'
         },
 ```
+
+## Example 12 - Cable Label vertical writing.
+
+This example shows the creation of a Cabel label with barcode 128. Please note that an online function is used here (internet may be necessary). Barcode 128 is not created on the Netbox server.
+
+![Cable QR Code](/docs/img/Configuration_Label_Example_12.png)
+
+```Python
+            'cable_2': {
+            'title': 'Für Kabel',
+            'with_qr': False,
+            'label_edge_left': '0.00mm',
+            'label_edge_right': '0.00mm',
+            'label_edge_top': '0.00mm',
+            'text_align_vertical': 'middle',
+            'text_align_horizontal': 'center',
+            
+            # QR-Code Image File
+            'qr_version': 1,
+            'qr_error_correction': 1,
+            'qr_box_size': 2,
+            'qr_border': 0,
+            
+	    'text_template': '<svg id="barcode"></svg>'
+	                     '<svg id="barcode"></svg>'
+	                     '<svg id="barcode"></svg>'
+	                     '<svg id="barcode"></svg>'
+	                     ''
+	                     '<style>'
+                             '   #barcode {'
+                             '   max-width: 48mm;'
+                             '   width: 100%;'
+                             '   max-height: 6mm;'
+                             '   height: 100%;'
+                             '   }'
+                             '</style>'
+                             ''
+                             '<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>'
+                             ''
+                             '<script>'
+                             '   JsBarcode("#barcode", "{{ obj.label }}", {'
+                             '   background: "transparent",'
+                             '   format: "CODE128",'
+                             '   displayValue: true,'
+                             '   margin: 0,'
+                             '   height: 15'
+                             '   });'
+                             '</script>'
+```
