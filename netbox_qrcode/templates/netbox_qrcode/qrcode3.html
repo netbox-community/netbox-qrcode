@@ -1,19 +1,165 @@
 <script type="text/javascript">
-    function printImg(source) {
-        var win = window.open('');
-        win.document.write('<img src="' + source + '" onload="window.print();window.close()" />');
-        win.focus();
+
+    // Print view for the label.
+    function printPageArea(areaID)
+    {
+        //Trying to set Chrome Margines to none without specifying the sheet size does not work yet.
+        //But here is the approach
+        //var css  = '<style type="text/css">';
+        //    css += '    @media print';
+        //    css += '    {';
+        //    css += '        @page {';
+        //    //css += '           size: A4;';
+        //    css += '           margin: 0;';
+        //    css += '        }';
+        //    css += '    }';
+        //    css += '</style>';
+
+        var printContent = document.getElementById(areaID).innerHTML;
+        var originalContent = document.body.innerHTML;
+        
+        document.body.innerHTML = printContent;
+        //document.body.innerHTML += css;
+        window.print();
+        document.body.innerHTML = originalContent;
     }
+
 </script>
+
+<style>
+
+    /* For label visualization in Netbox, not for printing. */
+    .QR-Code-Label_{{labelDesignNo}} {
+        height: {{label_height}};
+        width: {{label_width}};
+        max-height: {{label_height}};
+        max-width: {{label_width}};
+        background-color: WhiteSmoke;
+        outline: 1px solid black;
+    }
+</style>
+ 
 <div class="card">
     <h5 class="card-header">
-        QR Code
+        OR-Code (H/W: {{label_height}} x {{label_width}}) {% if title %} - {{title}}{% endif %}
     </h5>
     <div class="card-body text-right noprint">
-        <img src="data:image/png;base64,{{image}}" />
+        <div id="QRCode_PrintArea_{{labelDesignNo}}">
+            <div id="QR-Code-Label_{{labelDesignNo}}" class="QR-Code-Label_{{labelDesignNo}}" style="overflow: hidden;">
+		    
+                {# Only Text label #}
+                {% if with_text is True and with_qr is False %}
+                    <table style="border-collapse: collapse; 
+                                  margin-top: {{label_edge_top}}; 
+                                  margin-left: {{label_edge_left}}; 
+                                  margin-right: {{label_edge_right}};
+                                  height: calc({{label_height}} - {{label_edge_top}});
+                                  width: calc({{label_width}} - {{label_edge_left}} - {{label_edge_right}})">
+                        <tr>
+                            <td style="font-family: {{font}}; font-weight: {{font_weight}}; color: {{font_color}}; font-size: {{font_size}}; padding: 0; text-align: {{text_align_horizontal}}; vertical-align: {{text_align_vertical}};">
+                                {{text|safe|escape}}
+                            </td>
+                        </tr>
+                    </table>
+                {% endif %}
+
+                {# Text and QR-Code #}
+                {% if with_text is True and with_qr is True %}
+                    
+                    {# Horizontal label #}
+                    {% if text_location == "right" or text_location == "left" %}
+                    <table style="border-collapse: collapse; 
+                                  height: calc({{label_height}} - {{label_edge_top}});
+                                  margin-top: {{label_edge_top}}; 
+                                  margin-left: {{label_edge_left}}; 
+                                  margin-right: {{label_edge_right}}">
+                        <tr>
+
+                            {% if text_location == "right" %}
+                            <td style="padding: 0">
+				    	        {% include "netbox_qrcode/qrcode3_sub_qrcode.html" %}
+                            </td>
+                            {% endif %}
+
+				    	    <td style="text-align: {{text_align_horizontal}}; vertical-align: {{text_align_vertical}}; padding: 0">
+    			    			<div style="overflow: hidden; 
+                                            max-height: {{label_height}}; 
+                                            width: calc({{label_width}} - {{label_edge_left}} - {{label_edge_right}} - {{label_qr_width}} - {{label_qr_text_distance}}); 
+                                            max-width: calc({{label_width}} - {{label_edge_left}} - {{label_edge_right}} - {{label_qr_width}} - {{label_qr_text_distance}}); 
+                                            display: flex; 
+                                            align-items: center;">
+                                    <span style="font-family: {{font}}; font-weight: {{font_weight}}; font-size: {{font_size}}; color: {{font_color}}; max-height: {{label_height}};
+                                                 width: calc({{label_width}} - {{label_edge_left}} - {{label_edge_right}} - {{label_qr_width}} - {{label_qr_text_distance}});">
+                                        {{text|safe|escape}}
+				    			    </span>	
+				    		    </div>
+				    	    </td>
+
+                            {% if text_location == "left" %}
+                            <td style="padding: 0">
+                                {% include "netbox_qrcode/qrcode3_sub_qrcode.html" %}
+                            </td>
+                            {% endif %}
+
+				        </tr>
+                    </table>
+                    {% endif %}
+
+                    {# Vertical label #}
+                    {% if with_qr and text_location == "up" or text_location == "down" %}
+                    <table style="border-collapse: collapse; 
+                                  margin-top: {{label_edge_top}};
+                                  margin-bottom: {{label_edge_bottom}}; 
+                                  margin-left: {{label_edge_left}}; 
+                                  margin-right: {{label_edge_right}}">
+
+                        {% if text_location == "down" %}
+                        <tr>
+                            <td style="padding:0" align="center">
+				    	    {% include "netbox_qrcode/qrcode3_sub_qrcode.html" %}
+                            </td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+				    	    <td style="text-align: {{text_align_horizontal}}; vertical-align: {{text_align_vertical}}; padding: 0">
+    			    			<div style="overflow: hidden; 
+                                            width: {{label_width}};
+                                            max-width: {{label_width}}; 
+                                            height: calc({{label_height}} - {{label_edge_top}} - {{label_edge_bottom}} - {{label_qr_height}} - {{label_qr_text_distance}}); 
+                                            max-height: calc({{label_height}} - {{label_edge_top}} - {{label_qr_height}} - {{label_qr_text_distance}}); 
+                                            display: flex;">
+                                    <span style="font-family: {{font}}; font-size: {{font_size}}; font-weight: {{font_weight}}; color: {{font_color}}; width: {{label_width}}; max-width: {{label_width}}">
+                                        {{text|safe|escape}}
+				    			    </span>	
+				    		    </div>
+				    	    </td>
+				        </tr>
+
+                        {% if text_location == "up" %}
+                        <tr>
+                            <td style="padding:0" align="center">
+                                {% include "netbox_qrcode/qrcode3_sub_qrcode.html" %}
+                            </td>
+                        </tr>
+                        {% endif %}
+
+			        </table>
+                    {% endif %}
+                {% endif %}
+
+                {# Only QR-Code label #}
+                {% if with_text is False and with_qr is True %}
+                    <div style="display: flex; align-items: center; justify-content: center; height: {{label_height}};">
+                        {% include "netbox_qrcode/qrcode3_sub_qrcode.html" %}
+                    </div>
+                {% endif %}
+		    </div>
+        </div>  
     </div>
+
     <div class="card-footer text-end noprint">
-        <button onclick="printImg('data:image/png;base64,{{image}}')" ; class="btn btn-xs btn-primary">
+        <button onclick="printPageArea('QRCode_PrintArea_{{labelDesignNo}}')" ; class="btn btn-xs btn-primary">
             <span class="mdi mdi-printer" aria-hidden="true"></span> Print
         </button>
     </div>
