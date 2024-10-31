@@ -15,14 +15,20 @@ class QRCode(PluginTemplateExtension):
         config = self.context['config']
         obj = self.context['object']
         request = self.context['request']
-        url = request.build_absolute_uri(obj.get_absolute_url())
         # get object settings
         obj_cfg = config.get(self.model.replace('dcim.', ''))
         if obj_cfg is None:
             return ''
         # and ovverride default
         config.update(obj_cfg)
-
+        
+        if config.get('url_template'):
+            django_engine = engines["django"]
+            template = django_engine.from_string(config.get('url_template'))
+            url = template.render({'obj': obj})
+        else:
+            url = request.build_absolute_uri(obj.get_absolute_url())
+            
         qr_args = {}
         for k, v in config.items():
             if k.startswith('qr_'):
