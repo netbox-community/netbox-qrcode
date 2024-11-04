@@ -11,7 +11,7 @@ jobs:
   release:
     uses: netboxlabs/public-workflows/.github/workflows/reusable-plugin-release.yml@develop
     with:
-      plugin_package_name: netbox-acls
-      plugin_package_dir: netbox_acls
+      plugin_package_name: netbox-qrcode
+      plugin_package_dir: netbox_qrcode
       release_notes_from_pr_body: false
     secrets: inherit
