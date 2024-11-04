@@ -1,12 +1,12 @@
 from netbox.plugins import PluginConfig
-from .version import __version__
+from .version import version_semver
 
 
 class QRCodeConfig(PluginConfig):
     name = 'netbox_qrcode'
     verbose_name = 'qrcode'
     description = 'Generate QR codes for the objects'
-    version = __version__
+    version = version_semver()
     author = 'Nikolay Yuzefovich'
     author_email = 'mgk.kolek@gmail.com'
     required_settings = []
