@@ -1,9 +1,13 @@
 import base64
 import qrcode
-
+import sys
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
-from importlib import resources as importlib_resources
+
+if sys.version_info.major == 3 and sys.version_info.minor < 12:
+    from pkg_resources import resource_stream
+else:
+    from importlib import resources as importlib_resources
 
 def get_qr_with_text(qr, descr):
     dsi = get_qr_text(qr.size, descr)
@@ -33,7 +37,10 @@ def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
         text_too_large = True
         font_size = 56
         while text_too_large:
-            file_path = importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
+            if sys.version_info.major == 3 and sys.version_info.minor < 12:
+                file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
+            else:
+                file_path = importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
             try:
                 fnt = ImageFont.truetype(file_path, font_size)
             except Exception:
@@ -45,7 +52,10 @@ def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
                 text_too_large = False
             font_size -= 1
     else:
-        file_path=importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
+        if sys.version_info.major == 3 and sys.version_info.minor < 12:
+            file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
+        else:
+            file_path = importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
         try:
             fnt = ImageFont.truetype(file_path, font_size)
         except Exception:
