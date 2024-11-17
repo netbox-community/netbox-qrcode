@@ -3,9 +3,7 @@ import qrcode
 
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
-
-from pkg_resources import resource_stream
-
+from importlib import resources as importlib_resources
 
 def get_qr_with_text(qr, descr):
     dsi = get_qr_text(qr.size, descr)
@@ -35,7 +33,7 @@ def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
         text_too_large = True
         font_size = 56
         while text_too_large:
-            file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
+            file_path = importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
             try:
                 fnt = ImageFont.truetype(file_path, font_size)
             except Exception:
@@ -47,7 +45,7 @@ def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
                 text_too_large = False
             font_size -= 1
     else:
-        file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
+        file_path=importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
         try:
             fnt = ImageFont.truetype(file_path, font_size)
         except Exception:
