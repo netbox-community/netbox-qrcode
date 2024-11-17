@@ -112,6 +112,12 @@ Developing tools for this project based on [ntc-netbox-plugin-onboarding](https:
 
 Issues and pull requests are welcomed.
 
+## Development
+
+You would like to help with the development of the plugin. Here you can find further information such as how to set up debugging in vscode and much more.
+
+- [Go to Development >>](docs/README_Subpages/README_Development.md)
+
 ## Screenshots
 
 Device QR code with text label

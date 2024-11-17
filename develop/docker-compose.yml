@@ -5,8 +5,14 @@ services:
     build:
       context: ../
       dockerfile: develop/Dockerfile
+
+    # The following commands are executed
+    # - Migrate Netbox
+    # - Create a user (superuser) for Netbox / Django so that you can log in directly to Netbox. More Infos: makesuperuser.py
+    # - Start Netbox     
     command: >
       sh -c "python manage.py migrate &&
+             python manage.py makesuperuser &&
              python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
@@ -18,6 +24,8 @@ services:
     volumes:
       - ./configuration.py:/opt/netbox/netbox/netbox/configuration.py
       - ../netbox_qrcode:/source/netbox_qrcode
+      # For automatic setup of the Django / Netbox SuperUser
+      - ../develop/management:/source/netbox_qrcode/management
     tty: true
   worker:
     build:
