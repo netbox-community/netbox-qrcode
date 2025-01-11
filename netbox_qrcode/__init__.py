@@ -10,6 +10,8 @@ class QRCodeConfig(PluginConfig):
     author = 'Nikolay Yuzefovich'
     author_email = 'mgk.kolek@gmail.com'
     required_settings = []
+    min_version = '4.2.0'
+    max_version = '4.2.99'
     default_settings = {
         'with_text': True,
         'text_fields': ['name', 'serial'],

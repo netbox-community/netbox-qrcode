@@ -33,7 +33,7 @@ services:
       - ../netbox_qrcode:/source/netbox_qrcode
     tty: true
   postgres:
-    image: postgres:12
+    image: postgres:16
     env_file: dev.env
     volumes:     
       - pgdata_netbox_qrcode:/var/lib/postgresql/data
