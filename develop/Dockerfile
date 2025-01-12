@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir -p /opt
 
 RUN pip install --upgrade pip
+RUN pip install setuptools
 
 # -------------------------------------------------------------------------------------
 # Install NetBox

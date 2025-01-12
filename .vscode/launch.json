@@ -1,0 +1,26 @@
+// Is required for debugging Docker-Compose in VSCode.
+{    
+    "configurations": [
+        {
+            
+            "name": "Docker: Python - Django",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/source"
+                }
+            ],
+
+            "django": true,
+
+            "justMyCode": true,
+        }
+    ]
+}
