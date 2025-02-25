@@ -67,7 +67,7 @@ class QRCode(PluginTemplateExtension):
         else:
             img = get_img_b64(qr_img)
         try:
-            if version.parse(settings.VERSION).major >= 3:
+            if version.parse(settings.RELEASE.version).major >= 3:
                 return self.render(
                     'netbox_qrcode/qrcode3.html', extra_context={'image': img}
                 )
