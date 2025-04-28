@@ -17,7 +17,7 @@ class QRCode(PluginTemplateExtension):
         request = self.context['request']
         url = request.build_absolute_uri(obj.get_absolute_url())
         # get object settings
-        obj_cfg = config.get(self.model.replace('dcim.', ''))
+        obj_cfg = config.get(self.models[0].replace('dcim.', ''))
         if obj_cfg is None:
             return ''
         # and ovverride default
@@ -80,42 +80,42 @@ class QRCode(PluginTemplateExtension):
 
 
 class DeviceQRCode(QRCode):
-    model = 'dcim.device'
+    models = ('dcim.device',)
 
     def right_page(self):
         return self.x_page()
 
 
 class RackQRCode(QRCode):
-    model = 'dcim.rack'
+    models = ('dcim.rack',)
 
     def right_page(self):
         return self.x_page()
 
 
 class CableQRCode(QRCode):
-    model = 'dcim.cable'
+    models = ('dcim.cable',)
 
     def left_page(self):
         return self.x_page()
 
 
 class LocationQRCode(QRCode):
-    model = 'dcim.location'
+    models = ('dcim.location',)
 
     def left_page(self):
         return self.x_page()
 
 
 class PowerFeedQRCode(QRCode):
-    model = 'dcim.powerfeed'
+    models = ('dcim.powerfeed',)
 
     def right_page(self):
         return self.x_page()
 
 
 class PowerPanelQRCode(QRCode):
-    model = 'dcim.powerpanel'
+    models = ('dcim.powerpanel',)
 
     def right_page(self):
         return self.x_page()    
