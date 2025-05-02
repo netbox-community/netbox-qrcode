@@ -191,13 +191,18 @@ This way, many label design options should be possible. The design of the label 
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
+Save this Netbox icon as an example in the following Netbox folder:
+/opt/netbox/netbox/media/image-attachments/Netbox_Icon_Example.png
+
+![Cable QR Code](/docs/img/Netbox_Icon_Example.png)
+
 ```Python
         'device_2': {
             'with_qr': False,
             'text_align_horizontal': 'center',
             'text_align_vertical': 'middle',
             'title': 'Example',
-            'text_template': '<div style="display: inline-block; height: 5mm; width: 15mm"><img src="/static/netbox_logo.svg" height="100%" width="100%"></div><br>'
+            'text_template': '<div style="display: inline-block; height: 8.65mm; width: 30mm"><img src="/media/image-attachments/Netbox_Icon_Example.png" height="100%" width="100%"></div><br>'
                              '{{ obj.name }} <br>'
                              '<div style="display: inline-block; height: 10mm; width: 10mm"><img src="data:image/png;base64,{{qrCode}}" height="100%" width="100%"/></div><br>' 
                              'Device: {{ obj.id|stringformat:"07d" }}'
@@ -208,7 +213,6 @@ This way, many label design options should be possible. The design of the label 
             'label_edge_top': '0mm',
             'label_edge_left': '0mm',
             'label_edge_right': '0mm',
-        },
 ```
 
 ## Example 11 - Cable Label vertical writing.
