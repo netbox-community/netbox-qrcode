@@ -32,7 +32,8 @@ setup(
     author_email='mgk.kolek@gmail.com',
     packages=find_packages(),
     include_package_data=True,
-#    max_version='4.0.10',
+    min_version='4.1.0',
+    max_version='4.1.99',
     package_data={
         '': ['*.ttf'],
         '': ['*.html'],
