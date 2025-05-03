@@ -17,9 +17,6 @@ This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) an
 | 0.0.15        | 4.1.x        | v4.1.6       |
 | 0.0.17        | 4.2.x        | v4.2.4       |
 
-
-Netbox version 2 is no longer supported.
-
 ## Installation
 
 If Netbox was installed according to the standard installation instructions. It may be necessary to activate the virtual environment.
@@ -104,3 +101,6 @@ Rack QR code
 
 Cable QR code
 ![Cable QR Code](docs/img/qrcode_cable.png)
+
+Device QR code via Jinja2 "text_template" Parameter (Multiline and labeled)
+![Cable QR Code](docs/img/qrcode_text_template.png)
