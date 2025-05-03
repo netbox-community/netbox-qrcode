@@ -112,43 +112,43 @@ class QRCode(PluginTemplateExtension):
         
 # Class for creating a QR code for the model: Device
 class DeviceQRCode(QRCode):
-    models = ('dcim.device',) 
+    models = ('dcim.device',)
 
     def right_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Rack
 class RackQRCode(QRCode):
-    models = ('dcim.rack',) 
+    models = ('dcim.rack',)
 
     def right_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Cable
 class CableQRCode(QRCode):
-    models = ('dcim.cable',) 
+    models = ('dcim.cable',)
 
     def left_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Location
 class LocationQRCode(QRCode):
-    models = ('dcim.location',) 
+    models = ('dcim.location',)
 
     def left_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Power Feed
 class PowerFeedQRCode(QRCode):
-    models = ('dcim.powerfeed',) 
+    models = ('dcim.powerfeed',)
 
     def right_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Power Panel
 class PowerPanelQRCode(QRCode):
-    models = ('dcim.powerpanel',) 
-    
+    models = ('dcim.powerpanel',)
+
     def right_page(self):
         return self.Create_PluginContent()
 
