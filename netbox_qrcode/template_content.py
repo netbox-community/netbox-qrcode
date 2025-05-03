@@ -42,7 +42,7 @@ class QRCode(PluginTemplateExtension):
 
         # Create plugin using template
         try:
-            if version.parse(settings.VERSION).major >= 3:
+            if version.parse(settings.RELEASE.version).major >= 3:
 
                 render = self.render(
                     'netbox_qrcode/qrcode3.html', extra_context={
@@ -97,7 +97,7 @@ class QRCode(PluginTemplateExtension):
 
         for i in range(2, 11):
 
-            configName = self.model.replace('dcim.', '') + '_' + str(i)
+            configName = self.models[0].replace('dcim.', '') + '_' + str(i)
             obj_cfg = config.get(configName) # Load configuration for additional label if possible.
 
             if(obj_cfg):
@@ -112,42 +112,42 @@ class QRCode(PluginTemplateExtension):
         
 # Class for creating a QR code for the model: Device
 class DeviceQRCode(QRCode):
-    model = 'dcim.device' # Info for Netbox in which model the plugin should be integrated.
+    models = ('dcim.device',) # Info for Netbox in which model the plugin should be integrated.
 
     def right_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Rack
 class RackQRCode(QRCode):
-    model = 'dcim.rack' # Info for Netbox in which model the plugin should be integrated.
+    models = ('dcim.rack',) # Info for Netbox in which model the plugin should be integrated.
 
     def right_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Cable
 class CableQRCode(QRCode):
-    model = 'dcim.cable' # Info for Netbox in which model the plugin should be integrated.
+    models = ('dcim.cable',) # Info for Netbox in which model the plugin should be integrated.
 
     def left_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Location
 class LocationQRCode(QRCode):
-    model = 'dcim.location' # Info for Netbox in which model the plugin should be integrated.
+    models = ('dcim.location',) # Info for Netbox in which model the plugin should be integrated.
 
     def left_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Power Feed
 class PowerFeedQRCode(QRCode):
-    model = 'dcim.powerfeed' # Info for Netbox in which model the plugin should be integrated.
+    models = ('dcim.powerfeed',) # Info for Netbox in which model the plugin should be integrated.
 
     def right_page(self):
         return self.Create_PluginContent()
 
 # Class for creating a QR code for the model: Power Panel
 class PowerPanelQRCode(QRCode):
-    model = 'dcim.powerpanel' # Info for Netbox in which model the plugin should be integrated.
+    models = ('dcim.powerpanel',) # Info for Netbox in which model the plugin should be integrated.
 
     def right_page(self):
         return self.Create_PluginContent()
@@ -155,12 +155,14 @@ class PowerPanelQRCode(QRCode):
 ##################################
 # Other plugins support
 
+# Commenting out (for now) - make this work on core models first.
 # Class for creating a QR code for the Plugin: Netbox-Inventory (https://github.com/ArnesSI/netbox-inventory)
-class Plugin_Netbox_Inventory(QRCode):
-    model = 'netbox_inventory.asset' # Info for Netbox in which model the plugin should be integrated.
-
-    def right_page(self):
-        return self.Create_PluginContent()
+#class Plugin_Netbox_Inventory(QRCode):
+#    models = ()'netbox_inventory.asset' # Info for Netbox in which model the plugin should be integrated.
+#
+#    def right_page(self):
+#        return self.Create_PluginContent()
 
 # Connects Netbox Core with the plug-in classes
-template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode, Plugin_Netbox_Inventory]
+# Removed , Plugin_Netbox_Inventory]
+template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
