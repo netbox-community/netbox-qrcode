@@ -1,20 +1,17 @@
 import base64
 import qrcode
-import sys
 from io import BytesIO
-from PIL import Image, ImageFont, ImageDraw
 
-if sys.version_info.major == 3 and sys.version_info.minor < 12:
-    from pkg_resources import resource_stream
-else:
-    from importlib import resources as importlib_resources
+# ******************************************************************************************
+# Includes useful tools to create the content.
+# ******************************************************************************************
 
-def get_qr_with_text(qr, descr):
-    dsi = get_qr_text(qr.size, descr)
-    resimg = get_concat(qr, dsi)
-    return get_img_b64(resimg)
-
-
+##################################          
+# Creates a QR code as an image.: https://pypi.org/project/qrcode/3.0/
+# --------------------------------
+# Parameter:
+#   text: Text to be included in the QR code.
+#   **kwargs: List of parameters which properties the QR code should have. (e.g. version, box_size, error_correction, border etc.)
 def get_qr(text, **kwargs):
     qr = qrcode.QRCode(**kwargs)
     qr.add_data(text)
@@ -23,100 +20,12 @@ def get_qr(text, **kwargs):
     img = img.get_image()
     return img
 
-
+##################################          
+# Converts an image to Base64
+# --------------------------------
+# Parameter:
+#   img: Image file
 def get_img_b64(img):
     stream = BytesIO()
     img.save(stream, format='png')
     return str(base64.b64encode(stream.getvalue()), encoding='ascii')
-
-
-def get_qr_text(max_size, text, font='TahomaBold', font_size=0):
-    tmpimg = Image.new('P', max_size, 'white')
-
-    if font_size == 0:
-        text_too_large = True
-        font_size = 56
-        while text_too_large:
-            if sys.version_info.major == 3 and sys.version_info.minor < 12:
-                file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
-            else:
-                file_path = importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
-            try:
-                fnt = ImageFont.truetype(file_path, font_size)
-            except Exception:
-                fnt = ImageFont.load_default()
-
-            draw = ImageDraw.Draw(tmpimg)
-            left, top, w, h = draw.textbbox((0, 0), text=text, font=fnt)
-            if w < max_size[0] - 4 and h < max_size[1] - 4:
-                text_too_large = False
-            font_size -= 1
-    else:
-        if sys.version_info.major == 3 and sys.version_info.minor < 12:
-            file_path = resource_stream(__name__, 'fonts/{}.ttf'.format(font))
-        else:
-            file_path = importlib_resources.files(__name__).joinpath('fonts/{}.ttf'.format(font))
-        try:
-            fnt = ImageFont.truetype(file_path, font_size)
-        except Exception:
-            fnt = ImageFont.load_default()
-        draw = ImageDraw.Draw(tmpimg)
-        left, top, w, h = draw.textbbox((0, 0), text=text, font=fnt)
-
-    img = Image.new('P', (w, h), 'white')
-    draw = ImageDraw.Draw(img)
-    draw.text((0, 0), text, font=fnt, fill='black')
-    return img
-
-
-def get_concat(im1, im2, direction='right'):
-    if direction == 'right' or direction == 'left':
-        width = im1.width + im2.width
-        height = max(im1.height, im2.height)
-    elif direction == 'down' or direction == 'up':
-        width = max(im1.width, im2.width)
-        height = im1.height + im2.height
-    else:
-        raise ValueError(
-            'Invalid direction "{}" (must be one of "left", "right", "up", or "down")'.format(direction)
-        )
-
-    dst = Image.new('L', (width, height), 'white')
-
-    if direction == 'right' or direction == 'left':
-        if im1.height > im2.height:
-            im1_y = 0
-            im2_y = abs(im1.height-im2.height) // 2
-        else:
-            im1_y = abs(im1.height-im2.height) // 2
-            im2_y = 0
-
-        if direction == 'right':
-            im1_x = 0
-            im2_x = im1.width
-        else:
-            im1_x = im2.width
-            im2_x = 0
-    elif direction == 'up' or direction == 'down':
-        if im1.width > im2.width:
-            im1_x = 0
-            im2_x = abs(im1.width-im2.width) // 2
-        else:
-            im1_x = abs(im1.width-im2.width) // 2
-            im2_x = 0
-
-        if direction == 'down':
-            im1_y = 0
-            im2_y = im1.height
-        else:
-            im1_y = im2.height
-            im2_y = 0
-    else:
-        raise ValueError(
-            'Invalid direction "{}" (must be one of "left", "right", "up", or "down")'.format(direction)
-        )
-
-    dst.paste(im1, (im1_x, im1_y))
-    dst.paste(im2, (im2_x, im2_y))
-
-    return dst
