@@ -5,7 +5,7 @@
 
 # Parameter
 PYTHON_VER?=3.12
-NETBOX_VER?=v4.0.2
+NETBOX_VER?=v4.3.0
 
 NAME=netbox-qrcode
 
@@ -22,15 +22,16 @@ cbuild:
 		--build-arg python_ver=${PYTHON_VER}
 
 # Start Docker with terminal window output
-debug:
+debug: cbuild
 	@echo "Starting Netbox .. "
 	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} up
 
 # Start Docker with terminal window output.
 # Brakepoints in e.g. Python files are supported in VSCode. Changes in Python and HTML are applied after saving.
-debug-vscode:
+debug-vscode: cbuild
 	@echo "Starting Netbox debug for VSCode.. "
-	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} -f ${COMPOSE_FILE_DEBUG} up --build
+	docker-compose -f ${COMPOSE_FILE} -p ${BUILD_NAME} -f ${COMPOSE_FILE_DEBUG} up
+# --build
 
 # Start Docker without connecting to the terminal window. (Runs independently of the terminal window.).
 start:

@@ -4,7 +4,6 @@
 ---
 services:
   netbox:
-
     # The following commands are executed
     # - Install Current Version of DebugPy for Debug in Visual Studio Code https://github.com/microsoft/debugpy
     # - PYDEVD_DISABLE_FILE_VALIDATION=1 --> You’re telling the debugger to skip this validation and proceed with debugging
