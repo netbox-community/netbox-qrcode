@@ -104,6 +104,8 @@ class QRCodeConfig(PluginConfig):
             'text_fields': ['name']
         },   
 
+        'module': {
+        },   
         'logo': '',
     }
 

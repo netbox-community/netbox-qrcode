@@ -153,6 +153,13 @@ class PowerPanelQRCode(QRCode):
     def right_page(self):
         return self.Create_PluginContent()
 
+# Class for dcim.module
+class ModuleQRCode(QRCode):
+    models = ('dcim.module',)
+
+    def right_page(self):
+        return self.Create_PluginContent()
+
 ##################################
 # Other plugins support
 
@@ -166,4 +173,4 @@ class PowerPanelQRCode(QRCode):
 
 # Connects Netbox Core with the plug-in classes
 # Removed , Plugin_Netbox_Inventory]
-template_extensions = [DeviceQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
+template_extensions = [DeviceQRCode, ModuleQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
