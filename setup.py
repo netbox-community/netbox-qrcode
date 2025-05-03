@@ -27,7 +27,7 @@ setup(
     description='QR Code generation for netbox objects',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/k01ek/netbox-qrcode',
+    url='https://github.com/netbox-community/netbox-qrcode',
     author='Nikolay Yuzefovich',
     author_email='mgk.kolek@gmail.com',
     packages=find_packages(),

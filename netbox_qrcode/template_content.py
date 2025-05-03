@@ -69,6 +69,7 @@ class QRCode(PluginTemplateExtension):
                                                                     'label_edge_right': config.get('label_edge_right'),
                                                                     'label_edge_bottom': config.get('label_edge_bottom')
                                                                 }
+
                 )
             
                 return render
