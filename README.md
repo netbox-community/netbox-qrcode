@@ -48,7 +48,7 @@ If the print does not look like the preview in the Netbox, first try to get a pe
 ![ShowImage](/docs/img/Configuration_Printer_WordPreview.png)
 
 
-Here is an example of what needs to be considered to print borderless from a Word document. [Go to: Eexample Zebra ZM400 300dpi label printer and a label 56x32mm. >>](/docs/img/Configuration_Printer_ZM400.png)
+Here is an example of what needs to be considered to print borderless from a Word document. [Go to: Example Zebra ZM400 300dpi label printer and a label 56x32mm. >>](/docs/img/Configuration_Printer_ZM400.png)
 
 
 ### Browser Print Settings correctly
@@ -67,7 +67,8 @@ When you press the “Print” button, there are some print properties that are 
 | Options --> Print backgrounds                  | disable                      |
 
 #### Chrome:
-The worst part was finding the right parameters for Chrome. Because it always turned it differently when printing than the print preview shows.
+Chrome can alter settings between printing and the print preview, therefore the below settings are recomended
+
 | Parameter                                      | Value                        |
 | ---------------------------------------------  | ---------------------------  |
 | Layout                                         | Portrait                     |  
@@ -90,7 +91,6 @@ You can customise the label as you wish, even 2 different labels for the ‘Devi
 ![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
 ## Contributing
-Developing tools for this project based on [ntc-netbox-plugin-onboarding](https://github.com/networktocode/ntc-netbox-plugin-onboarding) repo.
 
 Issues and pull requests are welcomed.
 
