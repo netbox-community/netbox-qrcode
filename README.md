@@ -39,7 +39,21 @@ Restart NetBox and add `netbox-qrcode` to your local_requirements.txt
 
 ## Configuration
 
-### Set the label printer correctly
+### Label Design
+
+Extensive label customisation is possible, it's also possible to include different labels for each objects, for example 2 lavels for view.
+
+For advice on configuration please see the two links below:
+
+- [Go to Configuration >>](docs/README_Subpages/README_Configuration.md)
+- [Go to Example label configurations >>](docs/README_Subpages/README_Configuration_ExampleLabelConf.md)
+
+![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
+
+
+### Printing
+
+#### Set the label printer correctly
 
 If the print does not look like the preview in the Netbox, first try to get a perfect print using Word. As many printer settings also have an influence on the print result. Borderless printing is possible if the printer (e.g. thermal transfer printer) supports this.
 
@@ -49,11 +63,11 @@ If the print does not look like the preview in the Netbox, first try to get a pe
 Here is an example of what needs to be considered to print borderless from a Word document. [Go to: Example Zebra ZM400 300dpi label printer and a label 56x32mm. >>](/docs/img/Configuration_Printer_ZM400.png)
 
 
-### Browser Print Settings correctly
+#### Browser Print Settings correctly
 
 When you press the “Print” button, there are some print properties that are added by the browser. However, these interfere with the print result. They should therefore be deactivated.
 
-#### Firefox:
+##### Firefox:
 
 | Parameter                                      | Value                        |
 | ---------------------------------------------  | ---------------------------  |
@@ -64,7 +78,7 @@ When you press the “Print” button, there are some print properties that are 
 | Options --> Print headers and footers          | disable                      |
 | Options --> Print backgrounds                  | disable                      |
 
-#### Chrome:
+##### Chrome:
 Chrome can alter settings between printing and the print preview, therefore the below settings are recomended
 
 | Parameter                                      | Value                        |
@@ -79,14 +93,7 @@ Chrome can alter settings between printing and the print preview, therefore the 
 ![Image](/docs/img/Configuration_Browser_Print_Settings.png)
 
 
-### Design your own label
 
-You can customise the label as you wish, even 2 different labels for the ‘Device’ view, for example, are possible.
-
-- [Go to Configuration >>](docs/README_Subpages/README_Configuration.md)
-- [Go to Example label configurations >>](docs/README_Subpages/README_Configuration_ExampleLabelConf.md)
-
-![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
 ## Contributing
 
@@ -102,6 +109,3 @@ Rack QR code
 
 Cable QR code
 ![Cable QR Code](docs/img/qrcode_cable.png)
-
-Device QR code via Jinja2 "text_template" Parameter (Multiline and labeled)
-![Cable QR Code](docs/img/qrcode_text_template.png)
