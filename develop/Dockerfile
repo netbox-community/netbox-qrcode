@@ -1,13 +1,14 @@
 ARG python_ver=3.12
 FROM python:${python_ver}
 
-ARG netbox_ver=v4.3,0
+ARG netbox_ver=master
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /opt
 
-RUN /usr/local/bin/uv pip install --upgrade pip
-RUN /usr/local/bin/uv pip install setuptools
+RUN pip install --upgrade pip
+RUN pip install setuptools
+
 
 # -------------------------------------------------------------------------------------
 # Install NetBox
