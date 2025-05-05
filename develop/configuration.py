@@ -292,7 +292,6 @@ PLUGINS_CONFIG = {
             'with_qr': False,
             'text_align_horizontal': 'center',
             'text_align_vertical': 'middle',
-            'title': 'Example',
             'text_template': '<div style="display: inline-block; height: 8.65mm; width: 30mm"><img src="/media/image-attachments/Netbox_Icon_Example.png" style="width:100%; height:100%; object-fit:fill;"></div><br>'
                              '{{ obj.name }} <br>'
                              '<div style="display: inline-block; height: 10mm; width: 10mm"><img src="data:image/png;base64,{{qrCode}}" style="width:100%; height:100%; object-fit:fill;"/></div><br>' 
