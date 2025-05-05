@@ -1,19 +1,19 @@
 # Example label configurations
 
-## Example 1 - Default
+## Example 1 (Device) - Default
 Standard label without customization
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_01.png) 
 
-## Example 2 
+## Example 2 (Device)
 QR code Higher than wide, with own logo Device name and Device ID filled with zeros.
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_02.png) 
 
 ```Python
         'device_2': {
-            'title': 'Example',
-            'text_template': '<div style="display: inline-block; height: 5mm; width: 15mm"><img src="{{ logo }}" height="100%" width="100%"></div><br>{{ obj.name }}<br>Device: {{ obj.id|stringformat:"07d" }}',
+            'title': 'Example 2 (Template for Device)',
+            'text_template': '<div style="display: inline-block; height: 5mm; width: 15mm"><img src="{{ logo }}" style="width:100%; height:100%; object-fit:fill;""></div><br>{{ obj.name }}<br>Device: {{ obj.id|stringformat:"07d" }}',
             'font_size': '4mm',
             'label_qr_width': '20mm',
             'label_qr_height': '30mm',
@@ -23,17 +23,17 @@ QR code Higher than wide, with own logo Device name and Device ID filled with ze
             'label_edge_top': '0mm',
             'label_edge_left': '2mm',
             'label_edge_right': '2mm',
-            'logo': 'data:image/png;base64,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',
+            'logo': '/media/image-attachments/Netbox_Icon_Example.png',
         },
 ```
-## Example 3 
+## Example 3 (Device)
 Text left QR code right with distance to the edge.
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_03.png) 
 
 ```Python
         'device_2': {
-            'title': 'Example',
+            'title': 'Example 3 (Template for Device)',
             'font_size': '4mm',
             'label_qr_width': '15mm',
             'label_qr_height': '15mm',
@@ -47,14 +47,14 @@ Text left QR code right with distance to the edge.
         },
 ```
 
-## Example 4
+## Example 4 (Device)
 Center text only
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_04.png) 
 
 ```Python
         'device_2': {
-            'title': 'Example',
+            'title': 'Example 4 (Template for Device)',
             'font_size': '4mm',
             'text_align_horizontal': 'center',
             'text_align_vertical': 'middle',
@@ -71,14 +71,14 @@ Center text only
         },
 ```
 
-## Example 5 
+## Example 5 (Device)
 Text links only
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_05.png) 
 
 ```Python
         'device_2': {
-            'title': 'Example',
+            'title': 'Example 5 (Template for Device)',
             'font_size': '4mm',
             'text_align_horizontal': 'left',
             'text_align_vertical': 'middle',
@@ -95,14 +95,14 @@ Text links only
         },
 ```
 
-## Example 6 
+## Example 6 (Device)
 QR code only
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_06.png) 
 
 ```Python
         'device_2': {
-            'title': 'Example',
+            'title': 'Example 6 (Template for Device)',
             'font_size': '4mm',
             'label_qr_width': '20mm',
             'label_qr_height': '20mm',
@@ -117,14 +117,14 @@ QR code only
         },
 ```
 
-## Example 7 
+## Example 7 (Device)
 Upright, large font with line break and serial number
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_07.png) 
 
 ```Python
-        'device_2': {
-            'title': 'Example',
+        'device_7': {
+            'title': 'Example 7 (Template for Device)',
             'font_size': '4mm',
             'label_qr_width': '20mm',
             'label_qr_height': '20mm',
@@ -141,14 +141,14 @@ Upright, large font with line break and serial number
         },
 ```
 
-## Example 8 
+## Example 8 (Device)
 Upright, large font with line break and serial number
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_08.png) 
 
 ```Python
-        'device_2': {
-            'title': 'Example',
+        'device_8': {
+            'title': 'Example 8 (Template for Device)',
             'font_size': '4mm',
             'label_qr_width': '20mm',
             'label_qr_height': '20mm',
@@ -164,28 +164,27 @@ Upright, large font with line break and serial number
         },
 ```
 
-## Example 9 
+## Example 9 (Device)
 Small label
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_09.png) 
 
 ```Python
-        'device_2': {
-            'title': 'Example',
-            'font_size': '4mm',
-            'label_qr_width': '20mm',
-            'label_qr_height': '20mm',
-            'label_qr_text_distance': '2mm',
-            'label_width': '32mm',
-            'label_height': '56mm',
-            'label_edge_top': '2mm',
-            'label_edge_left': '0mm',
+        'device_9': {
+            'title': 'Example 9 (Template for Device)',
+            'font_size': '1mm',
+            'label_qr_width': '9mm',
+            'label_qr_height': '9mm',
+            'label_qr_text_distance': '1mm',
+            'label_width': '25mm',
+            'label_height': '10mm',
+            'label_edge_top': '0.2mm',
+            'label_edge_left': '0.2mm',
             'label_edge_right': '0mm',
-            'text_location': 'down',
         },
 ```
 
-## Example 10 - Completely self-designed
+## Example 10 (Device) - Completely self-designed
 
 This way, many label design options should be possible. The design of the label content is completely specified by the user via this method.
 
@@ -197,14 +196,15 @@ Save this Netbox icon as an example in the following Netbox folder:
 ![Cable QR Code](/docs/img/Netbox_Icon_Example.png)
 
 ```Python
-        'device_2': {
+        'device_10': {
+            'title': 'Example 10 (Template for Device)',
             'with_qr': False,
             'text_align_horizontal': 'center',
             'text_align_vertical': 'middle',
             'title': 'Example',
-            'text_template': '<div style="display: inline-block; height: 8.65mm; width: 30mm"><img src="/media/image-attachments/Netbox_Icon_Example.png" height="100%" width="100%"></div><br>'
+            'text_template': '<div style="display: inline-block; height: 8.65mm; width: 30mm"><img src="/media/image-attachments/Netbox_Icon_Example.png" style="width:100%; height:100%; object-fit:fill;"></div><br>'
                              '{{ obj.name }} <br>'
-                             '<div style="display: inline-block; height: 10mm; width: 10mm"><img src="data:image/png;base64,{{qrCode}}" height="100%" width="100%"/></div><br>' 
+                             '<div style="display: inline-block; height: 10mm; width: 10mm"><img src="data:image/png;base64,{{qrCode}}" style="width:100%; height:100%; object-fit:fill;"/></div><br>' 
                              'Device: {{ obj.id|stringformat:"07d" }}'
                              '<p>&#128541; <font color="red"><b> My label design </b> </font> &#128541;</p>',
                              
@@ -213,9 +213,10 @@ Save this Netbox icon as an example in the following Netbox folder:
             'label_edge_top': '0mm',
             'label_edge_left': '0mm',
             'label_edge_right': '0mm',
+        },
 ```
 
-## Example 11 - Cable Label vertical writing.
+## Example 1 (Cable) - Cable Label vertical writing.
 
 This example shows how to write vertically, e.g. for cable labeling on a wide but not so high single label.
 
@@ -223,14 +224,14 @@ This example shows how to write vertically, e.g. for cable labeling on a wide bu
 
 ```Python
         'cable': {
-            'title': 'Für Kabel',
+            'title': 'Example 1 (Template for Cable)',
             'with_qr': False,
             'label_edge_left': '0.00mm',
             'label_edge_right': '0.00mm',
             'label_edge_top': '0.00mm',
             'text_align_vertical': 'middle',
             'text_align_horizontal': 'center',
-	    'text_template': '<span style="writing-mode: vertical-lr; transform: scale(-1);">'
+	        'text_template': '<span style="writing-mode: vertical-lr; transform: scale(-1);">'
                              '{{ obj.label }}</br>'
                              '{{ obj.label }}</br>'
                              '{{ obj.label }}</br>'
@@ -248,15 +249,15 @@ This example shows how to write vertically, e.g. for cable labeling on a wide bu
         },
 ```
 
-## Example 12 - Cable Label vertical writing.
+## Example 2 (Cable) - Cable Label vertical writing.
 
 This example shows the creation of a Cabel label with barcode 128. Please note that an online function is used here (internet may be necessary). Barcode 128 is not created on the Netbox server.
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_12.png)
 
 ```Python
-            'cable_2': {
-            'title': 'Für Kabel',
+        'cable_2': {
+            'title': 'Example 2 (Template for Cable)',
             'with_qr': False,
             'label_edge_left': '0.00mm',
             'label_edge_right': '0.00mm',
@@ -295,4 +296,5 @@ This example shows the creation of a Cabel label with barcode 128. Please note t
                              '   height: 15'
                              '   });'
                              '</script>'
+        }
 ```
