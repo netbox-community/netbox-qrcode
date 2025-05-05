@@ -1,3 +1,5 @@
+[<< Back to General Configuration](README_Configuration.md)
+
 # Example label configurations
 
 ## Example 1 (Device) - Default
@@ -298,3 +300,5 @@ This example shows the creation of a Cabel label with barcode 128. Please note t
                              '</script>'
         }
 ```
+
+[<< Back to General Configuration](README_Configuration.md)

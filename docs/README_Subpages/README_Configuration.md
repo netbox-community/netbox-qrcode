@@ -654,7 +654,7 @@ PLUGINS_CONFIG = {
 ```
 
 ## Example label configurations
-[Go to Example label configurations >>](docs/README_Subpages/README_Configuration_ExampleLabelConf.md)
+[Go to Example label configurations >>](README_Configuration_ExampleLabelConf.md)
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
