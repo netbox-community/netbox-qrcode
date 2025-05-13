@@ -336,13 +336,35 @@ The parameters that can be used to design the label are listed below.
 
     Enables a logo/image to be inserted in combination with the `text_template` parameter.
 
-    **Image File size:**
+    ### Image File size:
     
     To keep the traffic and performance high, the image should be as small as necessary. An image with 1920x1200px and 30MB is nonsensical if it is to be 1.00x3.00cm in size at the end. The larger the image, the longer the Base64 text. If possible, the logo is completely black and not gray or colored, which makes it even smaller. (Sufficient for thermal transfer printers).
 
     Here are a few helpful online tools:
     Resize image online (in mm): https://image.pi7.org/resize-image-in-mm
     Image compression (e.g. 100kb to 2kb): https://tinypng.com/
+    
+    ### Version 1: Link to the image (Simpler)
+
+    This variant shows how you can link a logo.
+    
+    ```Python
+    'logo': '/media/image-attachments/Netbox_Icon_Example.png',
+    ```
+
+    Below is how you can embed the logo in a text.
+    It is an HTML block that contains the image {{ logo }} as well as the name {{ obj.name }} and the ID of the object {{ obj.id }} in 3 lines.
+ 
+    ```Python
+    'text_template': '<div style="display: inline-block; height: 5mm; width: 15mm"><img src="{{ logo }}" style="width:100%; height:100%; object-fit:fill;"></div><br>{{ obj.name }}<br>Device: {{ obj.id }}<br>',
+    ```
+
+    ℹ️ The image links used in the examples are merely placeholders and are not predefined by the plugin. You can therefore freely adapt them to suit your environment. Links with http:// or https:// should also work as long as the client can access them. The NetBox media link used in the example is only one possible variant that has been successfully tested in a classic NetBox installation. As a guide, the media path used in the example is usually located in the following directory: /opt/netbox/netbox/media/
+
+    ℹ️ The logo link can be inserted directly in the text_template, but this is not recommended as the logo parameter may be included in the standard layout in future versions.
+ 
+    ### Version 2: Embedded Base64 Image (Complex)
+    
     Convert image to Base64 string.: https://www.base64-image.de/
 
     Your image should have the following text format at the end.
@@ -633,7 +655,7 @@ PLUGINS_CONFIG = {
 ```
 
 ## Example label configurations
-[Go to Example label configurations >>](docs/README_Subpages/README_Configuration_ExampleLabelConf.md)
+[Go to Example label configurations >>](README_Configuration_ExampleLabelConf.md)
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
