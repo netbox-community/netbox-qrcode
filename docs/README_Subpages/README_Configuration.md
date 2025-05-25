@@ -659,35 +659,4 @@ PLUGINS_CONFIG = {
 
 ![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
-
-# Other plugin support
-
-The following plugins are currently supported.
-
-### netbox-inventory 
-
-A Netbox plugin for hardware inventory. (https://github.com/ArnesSI/netbox-inventory)
-
-* `netbox_inventory.asset`:
-
-    ```Python
-    PLUGINS_CONFIG = {
-        'netbox_qrcode': {
-            'netbox_inventory.asset': {
-            'title': 'My Litle Label 1',
-            },
-        }
-    }
-    ```
-
-    ```Python
-    PLUGINS_CONFIG = {
-        'netbox_qrcode': {
-            'netbox_inventory.asset_2': {
-            'title': 'My Litle Label 2',
-            },
-        }
-    }
-    ```
-
 [<< Back to README start](/README.md)
