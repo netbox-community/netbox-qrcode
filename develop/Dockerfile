@@ -1,12 +1,14 @@
 ARG python_ver=3.12
 FROM python:${python_ver}
 
-ARG netbox_ver=v4.2.1
+ARG netbox_ver=main
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /opt
 
 RUN pip install --upgrade pip
+RUN pip install setuptools
+
 
 # -------------------------------------------------------------------------------------
 # Install NetBox

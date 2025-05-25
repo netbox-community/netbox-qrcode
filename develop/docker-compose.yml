@@ -17,6 +17,7 @@ services:
       - ./dev.env
     volumes:
       - ./configuration.py:/opt/netbox/netbox/netbox/configuration.py
+      - ../docs/img/Netbox_Icon_Example.png:/opt/netbox/netbox/media/image-attachments/Netbox_Icon_Example.png
       - ../netbox_qrcode:/source/netbox_qrcode
     tty: true
   worker:

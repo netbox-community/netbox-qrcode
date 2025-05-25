@@ -1,6 +1,6 @@
 # Netbox QR Code Plugin
 
-[Netbox](https://github.com/netbox-community/netbox) plugin for generate QR codes for objects: Rack, Device, Cable.
+[Netbox](https://github.com/netbox-community/netbox) plugin for generate QR codes for objects: Device, Module, Cable, Powerfeed, Powerpanel, Location 
 
 This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) and [Pillow](https://github.com/python-pillow/Pillow) python library
 
@@ -39,77 +39,63 @@ Restart NetBox and add `netbox-qrcode` to your local_requirements.txt
 
 ## Configuration
 
-The following options are available:
+### Label Design
 
-* `with_text`: Boolean (default True). Text label will be added to QR code image if enabled.
-* `text_template`: [Jinja2](https://jinja.palletsprojects.com/) template with {{ obj }} as context for device, rack, etc., using it ignores `text_fields` and `custom_text`.
+Extensive label customisation is possible, it's also possible to include different labels for each object type, for example 2 labels for the Device view.
 
-  Example to output name and site in two lines with caption (See also screenshots below):
-  ```
-  'text_template': 'Name: {{ obj.name }}\nSite: {{ obj.site }}',
-  ```
-* `text_fields`: List of String (default ['name']). Text fields of an object that will be added as text label to QR image. It's possible to use custom field values.
-* `font`: String (default TahomaBold) Font name for text label ( Some font include in package, see fonts dir).
-* `text_location`: Where to render the text, relative to the QR code.  Valid values are `"right"` (default), `"left"`", `"up"`, and `"down"`.
-* `custom_text`: String or None (default None) additional text label to QR code image (will be added after text_fields).
-* `qr_version`: Integer (default 1) parameter is an integer from 1 to 40 that controls the size of
-the QR Code (the smallest, version 1, is a 21x21 matrix).
-* `qr_error_correction`: Integer (default 0),  controls the error correction used for the
-QR Code. The following values are available:
+For advice on configuration please see the two links below:
 
-   1 - About 7% or less errors can be corrected.
-   0 - About 15% or less errors can be corrected.
-   2 - About 30% or less errors can be corrected.
-   3 - About 25% or less errors can be corrected.
+- [General Configuration >>](docs/README_Subpages/README_Configuration.md)
+- [Configuration Examples  >>](docs/README_Subpages/README_Configuration_ExampleLabelConf.md)
 
-* `qr_box_size`: Integer (default 6),  controls how many pixels each "box" of the QR code
-is.
-* `qr_border`: Integer (default 4),  controls how many boxes thick the border should be
-(the default is 4, which is the minimum according to the specs).
+![Cable QR Code](/docs/img/Configuration_Label_Example_10.png)
 
-### Per object options
 
-Per object options override default options. Per object options dictionary can contains any of default options inside.
+### Printing
 
-* `device`: Dict or None (default {'text_fields': ['name', 'serial']}), set None to disble QR code
-* `rack`: Dict or None (default {'text_fields': ['name']}) , set None to disble QR code
-* `cable`: Dict or None ( defaul {'text_fields': ['_termination_a_device', 'termination_a', '_termination_b_device', 'termination_b',]}), set None to disble QR code
+#### Setting the label printer 
 
-Configuration example:
-```
-PLUGINS_CONFIG = {
-    'netbox_qrcode': {
-        'with_text': True,
-        'text_fields': ['name', 'serial'],
-        'font': 'ArialMT',
-        'font_size': 12, # If the value is 0 or the line does not exist, then the text is automatically adjusted
-        'custom_text': 'Property of SomeCompany\ntel.8.800333554-CALL',
-        'text_location': 'up',
-        'qr_version': 1,
-        'qr_error_correction': 0,
-        'qr_box_size': 4,
-        'qr_border': 4,
-        # per object options
-        'cable': None,  # disable QR code for Cable object
-        'rack': {
-            'text_fields': [
-                'site',
-                'name',
-                'facility_id',
-                'tenant',
-                'cf.cf_name'
-            ]
-        },
-        'device': {
-            'qr_box_size': 6,
-            'custom_text': None,
-        }
-    }
-}
-```
+If the print does not look like the preview in the Netbox, first try to get a perfect print using Word. As many printer settings also have an influence on the print result. Borderless printing is possible if the printer (e.g. thermal transfer printer) supports this.
+
+![ShowImage](/docs/img/Configuration_Printer_WordPreview.png)
+
+
+Here is an example of what needs to be considered to print borderless from a Word document. [Go to: Example Zebra ZM400 300dpi label printer and a label 56x32mm. >>](/docs/img/Configuration_Printer_ZM400.png)
+
+
+#### Setting Browser Print Settings
+
+When you press the “Print” button, there are some print properties that are added by the browser. However, these interfere with the print result. They should therefore be deactivated.
+
+##### Firefox:
+
+| Parameter                                      | Value                        |
+| ---------------------------------------------  | ---------------------------  |
+| Orientation                                    | Portrait                     |  
+| Paper size                                     | User defined                 |
+| Margins                                        | none                         |
+| Scale                                          | Fit to page width or 100%    |
+| Options --> Print headers and footers          | disable                      |
+| Options --> Print backgrounds                  | disable                      |
+
+##### Chrome:
+Chrome can alter settings between printing and the print preview, therefore the below settings are recomended
+
+| Parameter                                      | Value                        |
+| ---------------------------------------------  | ---------------------------  |
+| Layout                                         | Portrait                     |  
+| Paper size                                     | empty !!!                    |
+| Pages per sheet                                | 1                            |
+| Margins                                        | none                         |
+| Scale                                          | Default or 100%              |
+| Options --> PBackground grafics                | disable                      |
+
+![Image](/docs/img/Configuration_Browser_Print_Settings.png)
+
+
+
 
 ## Contributing
-Developing tools for this project based on [ntc-netbox-plugin-onboarding](https://github.com/networktocode/ntc-netbox-plugin-onboarding) repo.
 
 Issues and pull requests are welcomed.
 
@@ -123,6 +109,3 @@ Rack QR code
 
 Cable QR code
 ![Cable QR Code](docs/img/qrcode_cable.png)
-
-Device QR code via Jinja2 "text_template" Parameter (Multiline and labeled)
-![Cable QR Code](docs/img/qrcode_text_template.png)
