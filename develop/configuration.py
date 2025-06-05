@@ -182,19 +182,6 @@ PLUGINS_CONFIG = {
             'label_edge_left': '2mm',
             'label_edge_right': '2mm',
             'logo': '/media/image-attachments/Netbox_Icon_Example.png',
-
-            # Styled QR image with radial gradient, gapped squares and embedded image
-            'qr_error_correction': qrcode.constants.ERROR_CORRECT_H,
-            'qr_image_kwargs': {
-                'image_factory': StyledPilImage,
-                'module_drawer': GappedSquareModuleDrawer(),
-                'color_mask': RadialGradiantColorMask(
-                    back_color=ImageColor.getrgb("#ffffff"),
-                    center_color=ImageColor.getrgb("#6642d3"),
-                    edge_color=ImageColor.getrgb("#386bf1")
-                ),
-                'embedded_image_path': "/opt/netbox/netbox/media/image-attachments/Netbox_Icon.png",
-            },
         },
 
         'device_3': {
@@ -258,6 +245,19 @@ PLUGINS_CONFIG = {
             'label_edge_right': '0mm',
             'with_text': False,
             'with_qr': True,
+
+            # Styled QR image with radial gradient, gapped squares and embedded image
+            'qr_error_correction': qrcode.constants.ERROR_CORRECT_H,
+            'qr_image_kwargs': {
+                'image_factory': StyledPilImage,
+                'module_drawer': GappedSquareModuleDrawer(),
+                'color_mask': RadialGradiantColorMask(
+                    back_color=ImageColor.getrgb("#ffffff"),
+                    center_color=ImageColor.getrgb("#6642d3"),
+                    edge_color=ImageColor.getrgb("#386bf1")
+                ),
+                'embedded_image_path': "/opt/netbox/netbox/media/image-attachments/Netbox_Icon.png",
+            },
         },
 
         'device_7': {
