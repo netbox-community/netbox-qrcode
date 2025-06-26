@@ -105,7 +105,14 @@ class QRCodeConfig(PluginConfig):
         },   
 
         'module': {
-        },   
+        },
+        
+        'asset': {
+            'text_fields': [
+                'name',
+                'asset_tag',
+                'serial']
+        },
         'logo': '',
     }
 
