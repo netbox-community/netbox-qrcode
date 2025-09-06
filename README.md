@@ -17,6 +17,8 @@ This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) an
 | 0.0.15        | 4.1.x        | 4.1.6        |
 | 0.0.17        | 4.2.x        | 4.2.4        |
 | 0.0.18        | 4.3.x        | 4.3.1        |
+| 0.0.19        | 4.4.x        | 4.4.0        |
+
 
 
 ## Installation
