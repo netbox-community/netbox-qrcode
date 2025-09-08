@@ -4,6 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from netbox.plugins import PluginTemplateExtension
 from .template_content_functions import create_text, create_url, config_for_modul, create_QRCode
 
+# Check if netbox-inventory is available
+try:
+    import netbox_inventory
+    INVENTORY_AVAILABLE = True
+except ImportError:
+    INVENTORY_AVAILABLE = False
+
 # ******************************************************************************************
 # Contains the main functionalities of the plugin and thus creates the content for the 
 # individual modules, e.g: Device, Rack etc.
@@ -160,17 +167,21 @@ class ModuleQRCode(QRCode):
     def right_page(self):
         return self.Create_PluginContent()
 
+
 ##################################
 # Other plugins support
 
-# Commenting out (for now) - make this work on core models first.
-# Class for creating a QR code for the Plugin: Netbox-Inventory (https://github.com/ArnesSI/netbox-inventory)
-#class Plugin_Netbox_Inventory(QRCode):
-#    models = ()'netbox_inventory.asset' # Info for Netbox in which model the plugin should be integrated.
-#
-#    def right_page(self):
-#        return self.Create_PluginContent()
+# Class for Netbox-Inventory Plugin
+class AssetQRCode(QRCode):
+    models = ('netbox_inventory.asset')
+
+    def right_page(self):
+        return self.Create_PluginContent()
+
 
 # Connects Netbox Core with the plug-in classes
-# Removed , Plugin_Netbox_Inventory]
 template_extensions = [DeviceQRCode, ModuleQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
+
+# Conditionally add AssetQRCode if inventory integration is available
+if INVENTORY_AVAILABLE:
+    template_extensions.append(AssetQRCode)
