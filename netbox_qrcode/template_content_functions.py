@@ -39,18 +39,22 @@ def config_for_modul(parentSelf, labelDesignNo):
 #   text: Text for QR-Code
 #   config: From the Netbox configuration file
 def create_QRCode(text, config):
-
     # Collect the configuration entries that begin with "qr_.
     # These are required to generate the QR code.
     qr_args = {}
+    overlay = None
+    overlay_brightness_enhance = None
     for k, v in config.items():
-        if k.startswith('qr_'):
-            qr_args[k.replace('qr_', '')] = v
+        if k.startswith("qr_") and k != "qr_overlay":
+            qr_args[k.replace("qr_", "")] = v
+        if k == "qr_overlay":
+            overlay = v
+        if k == "qr_overlay_brightness_enhance":
+            overlay_brightness_enhance = v
 
     # Create a QR code
-    qrCode = get_qr(text, **qr_args)
+    qrCode = get_qr(text, overlay, overlay_brightness_enhance, **qr_args)
     return get_img_b64(qrCode)
-
 
 ##################################
 # Create URL for QR code
