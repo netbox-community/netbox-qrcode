@@ -7,7 +7,8 @@ from PIL import Image, ImageOps, ImageEnhance
 # Includes useful tools to create the content.
 # ******************************************************************************************
 
-##################################          
+
+##################################
 # Creates a QR code as an image.: https://pypi.org/project/qrcode/3.0/
 # --------------------------------
 # Parameter:
@@ -16,7 +17,7 @@ from PIL import Image, ImageOps, ImageEnhance
 def get_qr(
     text,
     overlay: str | None = None,
-    overlay_brightness_enhance: float | None = None,
+    overlay_alpha: float | None = None,
     **kwargs,
 ):
     qr = qrcode.QRCode(**kwargs)
@@ -25,18 +26,20 @@ def get_qr(
     img = qr.make_image()
     img = img.get_image()
     if overlay:
-        img = texture_qr_modules(img, overlay, overlay_brightness_enhance)
+        img = texture_qr_modules(img, overlay, overlay_alpha)
     return img
 
-##################################          
+
+##################################
 # Converts an image to Base64
 # --------------------------------
 # Parameter:
 #   img: Image file
 def get_img_b64(img):
     stream = BytesIO()
-    img.save(stream, format='png')
-    return str(base64.b64encode(stream.getvalue()), encoding='ascii')
+    img.save(stream, format="png")
+    return str(base64.b64encode(stream.getvalue()), encoding="ascii")
+
 
 ##################################
 # Replace the QR Code's black modules with pixels from 'texture_path',
@@ -49,11 +52,11 @@ def get_img_b64(img):
 def texture_qr_modules(
     qr_img: Image.Image,
     texture_path: str,
-    overlay_brightness_enhance: float | None = None,
+    overlay_alpha: float | None = None,
 ) -> Image.Image:
     """
     Replace the QR Code's black modules with pixels from 'texture_path',
-    leaving white background untouched.
+    leaving white background untouched. Transparent pixels in the texture are not affected.
     """
 
     qr_rgb = qr_img.convert("RGB")
@@ -61,14 +64,25 @@ def texture_qr_modules(
     inv = ImageOps.invert(qr_rgb.convert("L"))
     mask = inv.point(lambda p: 255 if p > 128 else 0)
 
-    texture = Image.open(texture_path).convert("RGB").resize(qr_rgb.size, Image.LANCZOS)
+    # Load texture in RGBA to detect transparent pixels
+    texture = (
+        Image.open(texture_path).convert("RGBA").resize(qr_rgb.size, Image.LANCZOS)
+    )
 
-    if overlay_brightness_enhance:
-        texture = ImageEnhance.Brightness(texture).enhance(overlay_brightness_enhance)
+    # Extract alpha channel
+    alpha = texture.split()[3]
 
+    # Adjust alpha transparency if overlay_alpha is provided
+    if overlay_alpha is not None:
+        alpha = alpha.point(lambda p: int(p * overlay_alpha))
+
+    texture_rgb = texture.convert("RGB")
+
+    # Composite texture over the original QR using alpha channel
+    result = Image.composite(texture_rgb, qr_rgb, alpha)
+
+    # Now apply the QR mask to keep white background, only allowing texture in black modules
     white = Image.new("RGB", qr_rgb.size, (255, 255, 255))
-    textured_modules = Image.composite(texture, white, mask)
+    textured_modules = Image.composite(result, white, mask)
 
     return textured_modules
-
-

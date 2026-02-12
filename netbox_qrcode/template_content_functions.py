@@ -43,20 +43,20 @@ def create_QRCode(text, config):
     # These are required to generate the QR code.
     qr_args = {}
     overlay = None
-    overlay_brightness_enhance = None
+    overlay_alpha = None
     for k, v in config.items():
         if k.startswith("qr_") and not k.startswith("qr_overlay"):
             qr_args[k.replace("qr_", "")] = v
         if k == "qr_overlay":
             overlay = v
-        if k == "qr_overlay_brightness_enhance":
+        if k == "qr_overlay_alpha":
             if v:
-                overlay_brightness_enhance = float(v)
+                overlay_alpha = float(v)
             else:
-                overlay_brightness_enhance = None
+                overlay_alpha = None
 
     # Create a QR code
-    qrCode = get_qr(text, overlay, overlay_brightness_enhance, **qr_args)
+    qrCode = get_qr(text, overlay, overlay_alpha, **qr_args)
     return get_img_b64(qrCode)
 
 ##################################

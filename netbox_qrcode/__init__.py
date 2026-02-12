@@ -56,7 +56,7 @@ class QRCodeConfig(PluginConfig):
         ################################## 
         # QR Overlay
         'qr_overlay': None,
-        'qr_overlay_brightness_enhance': None,
+        'qr_overlay_alpha': None,
         
         ################################## 
         # Label Layout
