@@ -45,12 +45,15 @@ def create_QRCode(text, config):
     overlay = None
     overlay_brightness_enhance = None
     for k, v in config.items():
-        if k.startswith("qr_") and k != "qr_overlay":
+        if k.startswith("qr_") and not k.startswith("qr_overlay"):
             qr_args[k.replace("qr_", "")] = v
         if k == "qr_overlay":
             overlay = v
         if k == "qr_overlay_brightness_enhance":
-            overlay_brightness_enhance = v
+            if v:
+                overlay_brightness_enhance = float(v)
+            else:
+                overlay_brightness_enhance = None
 
     # Create a QR code
     qrCode = get_qr(text, overlay, overlay_brightness_enhance, **qr_args)
