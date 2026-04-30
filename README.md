@@ -10,15 +10,8 @@ This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) an
 
 ## Compatibility
 
-| Plugin Version | NetBox Version | Tested on |
-| ------------- |:-------------| :-----------:|
-| 0.0.11        | 3.7.x        | 3.7.x        |
-| 0.0.14        | 4.0.x        | 4.0.11       |
-| 0.0.15        | 4.1.x        | 4.1.6        |
-| 0.0.17        | 4.2.x        | 4.2.4        |
-| 0.0.18        | 4.3.x        | 4.3.1        |
-| 0.0.19        | 4.4.x        | 4.4.0        |
-| 0.0.20        | 4.5.x        | 4.5.0        |
+See the [compatibility matrix](COMPATIBILITY.md) for supported NetBox versions.
+
 
 
 ## Installation
