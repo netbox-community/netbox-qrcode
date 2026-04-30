@@ -1,6 +1,6 @@
 # Netbox QR Code Plugin
 
-A [NetBox](https://github.com/netbox-community/netbox) plugin used to generate QR codes for objects: Device, Module, Cable, Powerfeed, Powerpanel, Location 
+A [NetBox](http://netboxlabs.com/oss/netbox/) plugin used to generate QR codes for objects: Device, Module, Cable, Powerfeed, Powerpanel, Location 
 
 This plugin depends on [qrcode](https://github.com/lincolnloop/python-qrcode) and [Pillow](https://github.com/python-pillow/Pillow) python library
 
