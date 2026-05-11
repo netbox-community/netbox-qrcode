@@ -51,6 +51,12 @@ class QRCodeConfig(PluginConfig):
         'qr_error_correction': 0,
         'qr_box_size': 4,
         'qr_border': 0,
+
+
+        ################################## 
+        # QR Overlay
+        'qr_overlay': None,
+        'qr_overlay_alpha': None,
         
         ################################## 
         # Label Layout
