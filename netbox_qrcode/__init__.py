@@ -10,7 +10,7 @@ class QRCodeConfig(PluginConfig):
     author = 'Nikolay Yuzefovich'
     author_email = 'mgk.kolek@gmail.com'
     required_settings = []
-    min_version = '4.6.0-beta1'
+    min_version = '4.6.0'
     max_version = '4.6.99'
     default_settings = {
 	
