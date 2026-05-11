@@ -171,11 +171,11 @@ class ModuleQRCode(QRCode):
         return self.Create_PluginContent()
 # Class for Netbox-Inventory Plugin
 class AssetQRCode(QRCode):
-    models = ('netbox_inventory.asset')
+    models = ('netbox_inventory.asset',)
 
     def right_page(self):
         return self.Create_PluginContent()
-        
+
 ##################################
 # Other plugins support
 
