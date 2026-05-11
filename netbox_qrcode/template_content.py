@@ -9,6 +9,16 @@ from .template_content_functions import create_text, create_url, config_for_modu
 # individual modules, e.g: Device, Rack etc.
 # ******************************************************************************************
 
+# Check if netbox-inventory is available
+try:
+    import netbox_inventory
+    INVENTORY_AVAILABLE = True
+except ImportError:
+    INVENTORY_AVAILABLE = False
+
+
+
+
 ##################################
 # Class for creating the plugin content
 class QRCode(PluginTemplateExtension):
@@ -159,7 +169,13 @@ class ModuleQRCode(QRCode):
 
     def right_page(self):
         return self.Create_PluginContent()
+# Class for Netbox-Inventory Plugin
+class AssetQRCode(QRCode):
+    models = ('netbox_inventory.asset')
 
+    def right_page(self):
+        return self.Create_PluginContent()
+        
 ##################################
 # Other plugins support
 
@@ -174,3 +190,5 @@ class ModuleQRCode(QRCode):
 # Connects Netbox Core with the plug-in classes
 # Removed , Plugin_Netbox_Inventory]
 template_extensions = [DeviceQRCode, ModuleQRCode, RackQRCode, CableQRCode, LocationQRCode, PowerFeedQRCode, PowerPanelQRCode]
+if INVENTORY_AVAILABLE:
+    template_extensions.append(AssetQRCode)
