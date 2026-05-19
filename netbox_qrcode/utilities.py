@@ -13,10 +13,16 @@ from io import BytesIO
 #   text: Text to be included in the QR code.
 #   **kwargs: List of parameters which properties the QR code should have. (e.g. version, box_size, error_correction, border etc.)
 def get_qr(text, **kwargs):
-    qr = qrcode.QRCode(**kwargs)
+    qr_kwargs = {key: value for key, value in kwargs.items() if key != 'image_kwargs'}
+    qr = qrcode.QRCode(**qr_kwargs)
     qr.add_data(text)
     qr.make(fit=True)
-    img = qr.make_image()
+
+    if 'image_kwargs' in kwargs:
+        img = qr.make_image(**kwargs['image_kwargs'])
+    else:
+        img = qr.make_image()
+
     img = img.get_image()
     return img
 
