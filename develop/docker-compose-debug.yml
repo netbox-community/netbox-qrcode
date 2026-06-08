@@ -1,0 +1,34 @@
+# This Docker Compose Debug File supports you with debugging in VSCode For more details see README.md
+
+# Overwrites parts of the service from the Docker-Compose file:
+---
+services:
+  netbox:
+    # The following commands are executed
+    # - Install Current Version of DebugPy for Debug in Visual Studio Code https://github.com/microsoft/debugpy
+    # - PYDEVD_DISABLE_FILE_VALIDATION=1 --> You’re telling the debugger to skip this validation and proceed with debugging
+    # - Migrate Netbox
+    # - Create a user (superuser) for Netbox / Django so that you can log in directly to Netbox. More Infos: makesuperuser.py
+    # - Start Netbox with Modul DebugPy (Xfrozen_modules=off --> Disable Frozen Moduls in DebugPy Mode; 5678 is Debug Port)
+    command: >
+        sh -c "echo Run Netbox Django in debug mode &&
+               pip install debugpy &&
+               PYDEVD_DISABLE_FILE_VALIDATION=1 &&
+               python manage.py migrate &&
+               python manage.py makesuperuser &&
+               python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --insecure"
+    ports:
+      - '8000:8000'
+      - '5678:5678'
+  worker:
+    # Enables the synchronization of source code files with the Docker container during debugging.
+    # Without this option, changed files in the Docker container are only transferred to VSCode.
+    # Currently HTML files are changed live. After saving a *.py file, the container is automatically rebuilt. I don't know if this can be optimized. Greetings LHBL2003.
+    # https://www.docker.com/blog/docker-compose-experiment-sync-files-and-automatically-rebuild-services-with-watch-mode/
+    x-develop:
+      watch:
+        - action: sync
+          path: ../netbox_qrcode
+          target: /source/netbox_qrcode
+        #- action: rebuild
+          #path: package.json

@@ -1,0 +1,19 @@
+// Is required for debugging Docker-Compose in VSCode.
+{
+    "version": "2.0.0",
+    "tasks": [
+        { 
+            "label": "docker-run: debug",
+            "type": "docker-compose",
+            "dockerCompose": {
+            "up": {
+                "detached": true,
+                "build": true
+            },
+            "files": [
+                "${workspaceFolder}/develop/docker-compose.yml",
+                ]
+            }
+        }
+    ]
+  }
