@@ -1,0 +1,8 @@
+# Dependencies for building the documentation site.
+#
+#   pip install -r docs/requirements.txt
+#   mkdocs serve
+#
+# mkdocs-material is capped below 10.0 because MkDocs 2.0 introduces
+# backward-incompatible changes to the plugin and theming systems.
+mkdocs-material>=9.5,<10.0

@@ -13,6 +13,11 @@ This release targets NetBox 4.7. The supported range is declared as a minimum of
 
 ### Housekeeping
 
+* Added a test suite covering label text generation, configuration resolution, and label rendering, including regression tests for both bug fixes above. The tests need neither a database nor a NetBox installation, and can be run with `python runtests.py` or, inside a NetBox installation, with `./manage.py test netbox_qrcode.tests`.
+* Added a CI workflow running the test suite against Python 3.12, 3.13, and 3.14, building the documentation with `mkdocs build --strict`, and verifying that the label templates are present in the built wheel.
+* Declared `packaging` as a runtime dependency. It is imported by `template_content.py` but was previously undeclared, so the package was only importable because NetBox happens to depend on it as well.
+* Added `test` and `docs` extras, and a `docs/requirements.txt` for building the documentation site.
+* Corrected the `Development Status` classifier from Pre-Alpha to Production/Stable, and declared the supported Python versions.
 * Documentation restructured into an MkDocs site.
 * Removed the invalid `min_version` and `max_version` arguments from `setup.py`, which setuptools silently discarded. The supported NetBox range is declared in `PluginConfig`, which is where it takes effect.
 * Declared `python_requires='>=3.12'` to match NetBox 4.7's supported Python versions.

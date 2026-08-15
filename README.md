@@ -60,7 +60,7 @@ Issues and pull requests are welcomed. Please note that pull requests are accept
 
 This repository follows the same two-branch model as NetBox itself:
 
-* `feature` — active development, targeting the upcoming NetBox minor release. **Base your pull requests on this branch.**
-* `main` — the current released version, used only for fixes to an already-published release.
+* `feature` — active development of future releases. **Base your pull requests on this branch.**
+* `main` — the released code. Releases are cut from here; `feature` is merged into `main` to release.
 
 GitHub defaults the base branch to `main`, so remember to switch the base to `feature` when opening a pull request.

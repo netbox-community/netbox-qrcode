@@ -1,0 +1,99 @@
+name: Lint and tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - feature
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    name: Build documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+      - name: Install documentation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r docs/requirements.txt
+      - name: Build documentation
+        # --strict fails the build on broken internal links or unrecognised config
+        run: mkdocs build --strict
+
+  package:
+    name: Build package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+      - name: Build distributions
+        run: python -m build
+      - name: Check distribution metadata
+        run: twine check dist/*
+      - name: Verify templates are packaged
+        # The label templates are the plugin's payload; a packaging regression that
+        # omitted them would install cleanly and then fail at render time.
+        run: |
+          python - <<'EOF'
+          import glob, zipfile, sys
+          wheel = glob.glob('dist/*.whl')[0]
+          names = zipfile.ZipFile(wheel).namelist()
+          expected = [
+              'netbox_qrcode/templates/netbox_qrcode/qrcode.html',
+              'netbox_qrcode/templates/netbox_qrcode/qrcode3.html',
+              'netbox_qrcode/templates/netbox_qrcode/qrcode3_sub_qrcode.html',
+          ]
+          missing = [n for n in expected if n not in names]
+          if missing:
+              sys.exit(f'Templates missing from wheel: {missing}')
+          print(f'All {len(expected)} templates present in {wheel}')
+          EOF
+
+  tests:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12", "3.13", "3.14" ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install plugin and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+          pip install .[test]
+      - name: Run tests
+        # The suite covers label generation, which needs neither a database nor a
+        # NetBox installation, so no Postgres or Redis service is required here.
+        run: python runtests.py -v

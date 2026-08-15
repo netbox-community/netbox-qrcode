@@ -118,11 +118,15 @@ A list of field names read from the object and rendered as the label text, one p
 
 Fields which do not exist on the object are skipped silently, so a single list can be shared across object types. Multi-value fields, such as cable terminations, are rendered as a comma-separated list of their values.
 
-Dotted notation reads an attribute of a related object, or a key of a custom field:
+Dotted notation reads a key from a dictionary-valued field, such as custom field data, or an attribute of the first element of a multi-value field:
 
 ```python
-'text_fields': ['a_terminations.device'],
+'text_fields': ['custom_field_data.rack_unit'],  # key of a custom field
+'text_fields': ['a_terminations.device'],        # attribute of the first termination
 ```
+
+!!! note
+    Dotted notation does not traverse a plain foreign key. `'site.name'` contributes nothing, because the lookup is performed as a dictionary access. Listing the field undotted (`'site'`) renders the related object's string representation, and [`text_template`](#text_template) can reach any related attribute — for example `{{ obj.site.name }}`.
 
 #### `custom_text`
 

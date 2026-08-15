@@ -107,8 +107,8 @@ NetBox is then available at `http://localhost:8000`. Use `make adduser` to creat
 
 This repository follows the same two-branch model as NetBox itself:
 
-* `feature` — active development, targeting the upcoming NetBox minor release. Pull requests should be based on this branch.
-* `main` — the current released version, used only for fixes to an already-published release.
+* `feature` — active development of future releases. Pull requests should be based on this branch.
+* `main` — the released code. Releases are cut from here; `feature` is merged into `main` to release.
 
 !!! warning
-    GitHub defaults the base branch of a new pull request to `main`. Change the base to `feature` unless you are specifically fixing an already-released version.
+    GitHub defaults the base branch of a new pull request to `main`. Change the base to `feature`.
