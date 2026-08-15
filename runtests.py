@@ -15,6 +15,7 @@ which supplies the real `netbox.plugins` and settings:
 
     ./manage.py test netbox_qrcode.tests
 """
+import logging
 import os
 import sys
 import types
@@ -99,6 +100,11 @@ def main():
     sys.path.insert(0, HERE)
     configure_django()
     stubbed = install_netbox_stub()
+
+    # Attaching a handler stops Python's last-resort handler printing the warnings that
+    # the error-isolation tests deliberately provoke. Tests which assert on log output
+    # use assertLogs(), which is unaffected.
+    logging.getLogger('netbox.plugins.netbox_qrcode').addHandler(logging.NullHandler())
     print(f"netbox.plugins: {'stubbed (NetBox not installed)' if stubbed else 'real'}")
 
     verbosity = 2 if '-v' in sys.argv or '--verbose' in sys.argv else 1

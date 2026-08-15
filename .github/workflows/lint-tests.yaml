@@ -66,6 +66,7 @@ jobs:
               'netbox_qrcode/templates/netbox_qrcode/qrcode.html',
               'netbox_qrcode/templates/netbox_qrcode/qrcode3.html',
               'netbox_qrcode/templates/netbox_qrcode/qrcode3_sub_qrcode.html',
+              'netbox_qrcode/templates/netbox_qrcode/qrcode_error.html',
           ]
           missing = [n for n in expected if n not in names]
           if missing:
