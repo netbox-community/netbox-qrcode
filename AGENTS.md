@@ -40,7 +40,8 @@ There is no linter configured in this repo. Defer all version pins to `setup.py`
 │   │   └── qrcode.html              — Legacy NetBox 1/2 panel. Unreachable; see Architecture.
 │   └── tests/                       — Standalone unittest suite; needs no database or NetBox.
 ├── docs/                            — mkdocs site (see mkdocs.yml for nav).
-│   ├── index.md, installation.md, configuration.md, label-examples.md, printing.md, changelog.md
+│   ├── index.md, installation.md, configuration.md, label-examples.md, printing.md
+│   ├── changelog.md             — Snippet include of the root CHANGELOG.md; no content of its own.
 │   ├── requirements.txt             — mkdocs-material, for building the docs.
 │   └── img/                         — Screenshots referenced by the docs.
 ├── develop/                         — Docker Compose dev environment, driven by the Makefile.
@@ -51,6 +52,7 @@ There is no linter configured in this repo. Defer all version pins to `setup.py`
 ├── runtests.py                      — Standalone test runner; stubs netbox.plugins if absent.
 ├── setup.py                         — Packaging. install_requires, extras (test, docs), classifiers.
 ├── Makefile                         — Dev environment and release helpers.
+├── CHANGELOG.md                     — The changelog. Canonical copy; docs/changelog.md includes it.
 ├── COMPATIBILITY.md                 — Plugin release to NetBox version matrix.
 └── .github/workflows/
     ├── lint-tests.yaml              — docs build, package build, test matrix.
@@ -235,7 +237,7 @@ Actions in `lint-tests.yaml` are SHA-pinned. `pub-pypi.yml` still uses floating 
 - **Never mutate the config dict** you were given. `PLUGINS_CONFIG` is process-wide and shared across requests; copy before updating.
 - **Nothing user-supplied should be trusted as HTML** except where that is the documented feature. `text_template` intentionally allows HTML; the error panel escapes the exception text because it embeds configuration values.
 - **A new configuration parameter is not done until it is in `docs/configuration.md`.** The docs are the reference; `default_settings` is not user-facing.
-- **Changelog.** User-visible changes get an entry in `docs/changelog.md` under the current version, with the issue link.
+- **Changelog.** User-visible changes get an entry in the root `CHANGELOG.md` under the current version, with the issue link. Do not edit `docs/changelog.md` — it is a one-line `pymdownx.snippets` include (`--8<-- "CHANGELOG.md"`) that pulls the root file into the docs site, so there is a single source of truth.
 
 ## Troubleshooting
 

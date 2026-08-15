@@ -52,7 +52,7 @@ This plugin requires no database migrations.
 * [Configuration](docs/configuration.md) — reference for every configuration parameter
 * [Label Examples](docs/label-examples.md) — worked label designs you can copy
 * [Printing](docs/printing.md) — printer and browser settings for accurate output
-* [Change Log](docs/changelog.md)
+* [Change Log](CHANGELOG.md)
 
 ## Contributing
 
