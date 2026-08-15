@@ -57,3 +57,10 @@ This plugin requires no database migrations.
 ## Contributing
 
 Issues and pull requests are welcomed. Please note that pull requests are accepted only for approved issues.
+
+This repository follows the same two-branch model as NetBox itself:
+
+* `feature` — active development, targeting the upcoming NetBox minor release. **Base your pull requests on this branch.**
+* `main` — the current released version, used only for fixes to an already-published release.
+
+GitHub defaults the base branch to `main`, so remember to switch the base to `feature` when opening a pull request.

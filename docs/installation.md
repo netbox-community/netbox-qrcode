@@ -102,3 +102,13 @@ make debug
 ```
 
 NetBox is then available at `http://localhost:8000`. Use `make adduser` to create a superuser, and `make stop` to shut the environment down. The NetBox version and Python version used are controlled by the `NETBOX_VER` and `PYTHON_VER` variables at the top of the `Makefile`.
+
+### Branches
+
+This repository follows the same two-branch model as NetBox itself:
+
+* `feature` — active development, targeting the upcoming NetBox minor release. Pull requests should be based on this branch.
+* `main` — the current released version, used only for fixes to an already-published release.
+
+!!! warning
+    GitHub defaults the base branch of a new pull request to `main`. Change the base to `feature` unless you are specifically fixing an already-released version.
