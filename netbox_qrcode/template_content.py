@@ -2,7 +2,7 @@ from packaging import version
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from netbox.plugins import PluginTemplateExtension
-from .template_content_functions import create_text, create_url, config_for_modul, create_QRCode
+from .template_content_functions import create_text, create_url, config_for_modul, create_QRCode, model_config_key
 
 # ******************************************************************************************
 # Contains the main functionalities of the plugin and thus creates the content for the 
@@ -108,7 +108,7 @@ class QRCode(PluginTemplateExtension):
 
         for i in range(2, 11):
 
-            configName = self.models[0].replace('dcim.', '') + '_' + str(i)
+            configName = model_config_key(self.models) + '_' + str(i)
             obj_cfg = config.get(configName) # Load configuration for additional label if possible.
 
             if(obj_cfg):

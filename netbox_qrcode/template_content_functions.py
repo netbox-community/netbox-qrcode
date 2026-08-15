@@ -6,6 +6,15 @@ from django.template import engines
 # ******************************************************************************************
 
 ##################################
+# Derive the configuration key for a template extension's model by stripping the app label,
+# e.g. 'dcim.device' -> 'device' and 'netbox_inventory.asset' -> 'asset'.
+# --------------------------------
+# Parameter:
+#   models: The 'models' attribute of the template extension, e.g. ('dcim.device',)
+def model_config_key(models):
+    return models[0].split('.', 1)[-1]
+
+##################################
 # The configuration is taken and all fields that are module-specific (e.g. Device, Rack, etc.) are replaced.
 # --------------------------------
 # Parameter:
@@ -24,9 +33,8 @@ def config_for_modul(parentSelf, labelDesignNo):
 
     # Collect the QR code plugin configuration for the specific object such as device, rack etc.
     # and overwrite the default configuration fields.
-    model_name = parentSelf.models[0].replace('dcim.', '')
-    model_name = model_name.replace('netbox_inventory.', '') 
-    obj_cfg = config.get(model_name + confModulsufix) 
+    model_name = model_config_key(parentSelf.models)
+    obj_cfg = config.get(model_name + confModulsufix)
     if obj_cfg is not None: 
         config.update(obj_cfg) # Ovverride default confiv Values
         return config
