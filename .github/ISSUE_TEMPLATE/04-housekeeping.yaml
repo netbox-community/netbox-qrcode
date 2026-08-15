@@ -1,0 +1,17 @@
+---
+name: 🏡 Housekeeping
+description: An internal change pertaining to the codebase itself
+labels: ["type: housekeeping"]
+body:
+  - type: textarea
+    attributes:
+      label: Proposed Changes
+      description: Describe in detail the proposed changes.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Justification
+      description: How will these changes benefit the project?
+    validations:
+      required: true

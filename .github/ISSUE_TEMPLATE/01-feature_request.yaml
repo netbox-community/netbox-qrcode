@@ -1,0 +1,33 @@
+---
+name: ✨ Feature Request
+description: Propose a new feature or enhancement
+labels: ["type: feature", "status: needs triage"]
+body:
+  - type: input
+    attributes:
+      label: Plugin Version
+      description: What version of the plugin are you currently running?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed functionality
+      description: >
+        Describe in detail the new feature or behavior you are proposing. Include any specific changes to work flows,
+        configuration parameters, and/or the rendered label. The more detail you provide here, the greater chance your
+        proposal has of being discussed.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Use case
+      description: >
+        Explain how adding this functionality would benefit users. What specific need(s) does it address?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: External dependencies
+      description: >
+        List any new dependencies on external libraries or services that this new feature would introduce. For example,
+        does the proposal require the installation of a new Python package?
