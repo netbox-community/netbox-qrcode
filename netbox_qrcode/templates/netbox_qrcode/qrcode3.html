@@ -36,12 +36,13 @@
         max-width: {{label_width}};
         background-color: WhiteSmoke;
         outline: 1px solid black;
+        display: inline-block;
     }
 </style>
  
 <div class="card">
     <h5 class="card-header">
-        OR-Code (H/W: {{label_height}} x {{label_width}}) {% if title %} - {{title}}{% endif %}
+        QR-Code (H/W: {{label_height}} x {{label_width}}) {% if title %} - {{title}}{% endif %}
     </h5>
     <div class="card-body text-right noprint">
         <div id="QRCode_PrintArea_{{labelDesignNo}}">
