@@ -32,10 +32,10 @@ setup(
     author_email='mgk.kolek@gmail.com',
     packages=find_packages(),
     include_package_data=True,
-    min_version='4.7.0-beta1',
-    max_version='4.7.99',
+    python_requires='>=3.12',
+    license='Apache-2.0',
+    license_files=['LICENSE'],
     package_data={
-        '': ['*.ttf'],
         '': ['*.html'],
     },
     install_requires=[
@@ -44,7 +44,6 @@ setup(
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
-        'License :: OSI Approved :: Apache Software License',
         'Framework :: Django',
         'Programming Language :: Python :: 3',
     ]

@@ -1,5 +1,5 @@
 PYTHON_VER?=3.14
-NETBOX_VER?=v4.7.0-beta1
+NETBOX_VER?=feature
 
 NAME=netbox-qrcode
 

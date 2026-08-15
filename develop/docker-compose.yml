@@ -39,7 +39,7 @@ services:
     volumes:     
       - pgdata_netbox_qrcode:/var/lib/postgresql/data
   redis:
-    image: redis:5-alpine
+    image: redis:7-alpine
     command:
       - sh
       - -c  # this is to evaluate the $REDIS_PASSWORD from the env
