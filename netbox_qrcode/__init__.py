@@ -81,10 +81,6 @@ class QRCodeConfig(PluginConfig):
         
         'cable': {
             'text_fields': [
-                '_termination_a_device',
-                'termination_a',
-                '_termination_b_device',
-                'termination_b',
                 'a_terminations.device',
                 'a_terminations',
                 'b_terminations.device',

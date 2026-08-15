@@ -135,7 +135,13 @@ def get_text_fields(config, obj):
                         if first_element and getattr(first_element, cfn, None):
                             text.append('{}'.format(getattr(first_element, cfn)))
             else:
-                text.append('{}'.format(getattr(obj, text_field)))
+                value = getattr(obj, text_field)
+                # Multi-value fields (e.g. cable terminations) are lists. Format the elements
+                # individually so the list's repr does not end up on the label.
+                if type(value) in (list, tuple):
+                    text.append(', '.join('{}'.format(v) for v in value))
+                else:
+                    text.append('{}'.format(value))
 
     # Append user-defined text to the end.
     custom_text = config.get('custom_text')
