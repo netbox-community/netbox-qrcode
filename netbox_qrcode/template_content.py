@@ -1,8 +1,12 @@
+import logging
+
 from packaging import version
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from netbox.plugins import PluginTemplateExtension
-from .template_content_functions import create_text, create_url, config_for_modul, create_QRCode
+from .template_content_functions import create_text, create_url, config_for_modul, create_QRCode, model_config_key
+
+logger = logging.getLogger('netbox.plugins.netbox_qrcode')
 
 # ******************************************************************************************
 # Contains the main functionalities of the plugin and thus creates the content for the 
@@ -89,6 +93,43 @@ class QRCode(PluginTemplateExtension):
                     'netbox_qrcode/qrcode.html', extra_context={'image': qrCode}
                 )
         except ObjectDoesNotExist:
+            logger.debug("Label design '%s' skipped: related object does not exist",
+                         self.Config_Name(labelDesignNo))
+            return ''
+
+    ##################################
+    # Returns the configuration key a label design is read from,
+    # e.g. 'device' for the first label and 'device_2' for the second.
+    # --------------------------------
+    # Parameter:
+    #   labelDesignNo: Which label design the key is for.
+    def Config_Name(self, labelDesignNo):
+
+        modelName = model_config_key(self.models)
+
+        if labelDesignNo <= 1:
+            return modelName
+
+        return '{}_{}'.format(modelName, labelDesignNo)
+
+    ##################################
+    # Creates a placeholder for a label that could not be rendered, so that a single
+    # broken configuration does not discard the object's other labels.
+    # --------------------------------
+    # Parameter:
+    #   configName: The configuration key of the label that failed.
+    #   error: The exception raised while rendering it.
+    def Create_ErrorContent(self, configName, error):
+
+        try:
+            return self.render(
+                'netbox_qrcode/qrcode_error.html', extra_context={
+                                                                    'configName': configName,
+                                                                    'error': repr(error)
+                                                                }
+            )
+        except Exception:
+            # Reporting a failure must never itself remove the remaining labels.
             return ''
 
     ##################################
@@ -98,24 +139,30 @@ class QRCode(PluginTemplateExtension):
     #   further label views are also created as additional plugin views.
     def Create_PluginContent(self):
 
-        # First Plugin Content
-        pluginContent = QRCode.Create_SubPluginContent(self, 1) 
-
-        # Check whether there is another configuration for the object, e.g. device, rack, etc.
-        # Support up to 10 additional label configurations (objectName_2 to ..._10) per object (e.g. device, rack, etc.).
+        # Support up to 10 label configurations per object (e.g. device, rack, etc.):
+        # the object's own configuration, plus objectName_2 to ..._10.
 
         config = self.context['config'] # Django configuration
 
-        for i in range(2, 11):
+        pluginContent = str()
 
-            configName = self.models[0].replace('dcim.', '') + '_' + str(i)
-            obj_cfg = config.get(configName) # Load configuration for additional label if possible.
+        for i in range(1, 11):
 
-            if(obj_cfg):
-                pluginContent += QRCode.Create_SubPluginContent(self, i) # Add another plugin view
-            else:
+            configName = self.Config_Name(i)
+
+            # The numbering must be contiguous, so the first missing entry ends the chain.
+            if i > 1 and not config.get(configName):
                 break
-        
+
+            # Each label is rendered in isolation. Without this, an error in any one
+            # design propagates out of the template extension and NetBox replaces the
+            # plugin's entire output, discarding the labels that did render.
+            try:
+                pluginContent += QRCode.Create_SubPluginContent(self, i)
+            except Exception as e:
+                logger.warning("Label design '%s' could not be rendered: %r", configName, e)
+                pluginContent += self.Create_ErrorContent(configName, e)
+
         return pluginContent
 
 ##################################

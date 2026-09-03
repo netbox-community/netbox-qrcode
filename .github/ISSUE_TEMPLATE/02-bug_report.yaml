@@ -1,0 +1,59 @@
+---
+name: 🐛 Bug Report
+description: Report a reproducible bug in the current stable release
+labels: ["type: bug", "status: needs triage"]
+body:
+  - type: input
+    attributes:
+      label: Plugin Version
+      description: What version of the plugin are you currently running?
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: NetBox Version
+      description: What version of NetBox are you currently running?
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Python Version
+      description: What version of Python are you currently running?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Plugin Configuration
+      description: >
+        Paste the `netbox_qrcode` section of your `PLUGINS_CONFIG` dictionary. Most label rendering issues depend on
+        configuration, so this is usually essential to reproducing the problem.
+      render: python
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: >
+        Describe in detail the exact steps that someone else can take to reproduce this bug. A numbered list of discrete
+        steps is strongly preferred. Remember to capture the creation of any objects which must exist to reproduce the
+        behavior.
+      placeholder: |
+        1. Create a device named "switch-01" with serial "SN12345"
+        2. Apply the configuration above and restart NetBox
+        3. Open the device detail view
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: The label should show the device name and serial number
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Observed Behavior
+      description: What happened instead? Be sure to include any error messages.
+      placeholder: The label was empty and a TypeError exception was raised
+    validations:
+      required: true

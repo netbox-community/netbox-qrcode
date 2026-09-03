@@ -1,0 +1,17 @@
+{# Shown in place of a single label whose configuration could not be rendered. #}
+{# The other labels for this object are unaffected.                           #}
+<div class="card">
+    <h5 class="card-header">
+        QR-Code - configuration error
+    </h5>
+    <div class="card-body">
+        <div class="alert alert-danger mb-0" role="alert">
+            <p>
+                The label design <code>{{ configName }}</code> could not be rendered.
+                Check this entry in the <code>netbox_qrcode</code> section of
+                <code>PLUGINS_CONFIG</code>.
+            </p>
+            <pre class="p-0 mb-0">{{ error }}</pre>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,9 @@
-PYTHON_VER?=3.12
-NETBOX_VER?=v4.6.0
+PYTHON_VER?=3.14
+NETBOX_VER?=feature
+
+# Branch that releases are cut from. `main` holds the released code; `feature` is
+# for active development of future releases and is merged into `main` to release.
+RELEASE_BRANCH?=main
 
 NAME=netbox-qrcode
 
@@ -49,21 +53,30 @@ migrations:
 
 
 relpatch:
-	$(eval GSTATUS := $(shell git status --porcelain))
-ifneq ($(GSTATUS),)
-	$(error Git status is not clean. $(GSTATUS))
-endif
-	git checkout develop
-	git remote update
-	git pull origin develop
 	$(eval CURVER := $(shell cat $(VERFILE) | grep -oE '[0-9]+\.[0-9]+\.[0-9]+'))
-	$(eval NEWVER := $(shell pysemver bump patch $(CURVER)))
-	$(eval RDATE := $(shell date '+%Y-%m-%d'))
-	git checkout -b release-$(NEWVER) origin/develop
+	$(eval NEWVER := $(shell pysemver bump patch $(CURVER) 2>/dev/null))
+	@# Guards run before any git mutation. These are shell tests rather than make
+	@# conditionals because a make `ifneq` is evaluated at parse time, before the
+	@# recipe's $(eval) has run, so it can never see the git status.
+	@test -z "$$(git status --porcelain)" || { \
+		echo "Error: git status is not clean. Commit or stash first:"; \
+		git status --porcelain; \
+		exit 1; \
+	}
+	@command -v pysemver >/dev/null 2>&1 || { \
+		echo "Error: pysemver not found. Install it with: pip install semver"; \
+		exit 1; \
+	}
+	@test -n "$(CURVER)" || { echo "Error: no version found in $(VERFILE)"; exit 1; }
+	@test -n "$(NEWVER)" || { echo "Error: could not compute the next version"; exit 1; }
+	git checkout $(RELEASE_BRANCH)
+	git remote update
+	git pull origin $(RELEASE_BRANCH)
+	git checkout -b release-$(NEWVER) origin/$(RELEASE_BRANCH)
 	echo '__version__ = "$(NEWVER)"' > $(VERFILE)
 	git commit -am 'bump ver'
 	git push origin release-$(NEWVER)
-	git checkout develop
+	git checkout $(RELEASE_BRANCH)
 
 pbuild:
 	python3 -m pip install --upgrade build

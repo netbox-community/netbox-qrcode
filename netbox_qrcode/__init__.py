@@ -10,8 +10,8 @@ class QRCodeConfig(PluginConfig):
     author = 'Nikolay Yuzefovich'
     author_email = 'mgk.kolek@gmail.com'
     required_settings = []
-    min_version = '4.6.0'
-    max_version = '4.6.99'
+    min_version = '4.7.0'
+    max_version = '4.7.99'
     default_settings = {
 	
         ################################## 
@@ -81,10 +81,6 @@ class QRCodeConfig(PluginConfig):
         
         'cable': {
             'text_fields': [
-                '_termination_a_device',
-                'termination_a',
-                '_termination_b_device',
-                'termination_b',
                 'a_terminations.device',
                 'a_terminations',
                 'b_terminations.device',
